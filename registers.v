@@ -28,6 +28,10 @@ module register(
         end
     end    
 
+    initial begin
+        memory[0] = 64'b0;
+    end
+
 
 
 endmodule
