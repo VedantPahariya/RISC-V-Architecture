@@ -4,7 +4,6 @@ module imm_gen(
 );
 
     //we want to  concatenate the msb of instruction till it becoms 64 bit and front
-
-    assign imm = {{32{instruction[31]}}, instruction[31:0]};
+    assign imm = {instruction[31],instruction[7], instruction[30:25], instruction[11:8]};
 
 endmodule
