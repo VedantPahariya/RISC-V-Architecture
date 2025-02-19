@@ -1,5 +1,4 @@
 module fa(a,b,c,sum,carry);
-
     input signed a,b,c;
     output signed sum,carry;
     wire d,e,f;
@@ -12,12 +11,15 @@ module fa(a,b,c,sum,carry);
 
 endmodule
 
-module ADD(rs1,rd);
+module ADD4(rs1,rd);
 
     input signed [7:0] rs1;
     wire rs2;
-    assign rs2 = 8'd4;
+    assign rs2 = 8'd4;  // need to add 4 to the PC address
     output signed [7:0] rd;
+
+    wire [8:0] carry;
+    assign carry[0] = 1'b0;
 
     genvar i;
     generate  
@@ -26,11 +28,26 @@ module ADD(rs1,rd);
         end
     endgenerate
 
-    EQUALSZERO eqz(zero_flag,rd);
-    assign carry_flag = carry[64];
-    xor(overflow_flag, carry_flag, carry[63]);
-
 endmodule
+
+module ADD(rs1,rs2,rd);
+
+    input signed [63:0] rs1,rs2;
+    output signed [7:0] rd;
+    wire [63:0] sum;
+    wire [64:0] carry;
+    assign carry[0] = 1'b0;
+
+    genvar i;
+    generate  
+        for(i = 0;i < 64; i = i + 1) begin
+            fa FullAdder(rs1[i],rs2[i],carry[i],sum[i],carry[i+1]);
+        end
+    endgenerate
+
+    assign rd = sum[7:0];
+endmodule
+
 
 module adder(
     input [7:0] address,      // PC address
@@ -42,24 +59,26 @@ module adder(
 
     wire [7:0] pc_plus_4;       // Holds address + 4
     wire [7:0] branch_target;   // Holds address + shifted immediate
-    wire [7:0] imm_shifted;     // Shifted immediate value
-    wire take_branch;           // AND of branch and zero
+    wire [63:0] imm_shifted;     // Shifted immediate value
+    wire PCsrc;           // AND of branch and zero
 
-    // Increment PC by 4 without using '+'
-    assign pc_plus_4 = {address[6:0], 1'b0} | 8'b00000100;
+    // extending the 8 bit address to 64 bit address
+    wire [63:0] address1;
+    assign address1 = {{56{0}}, address[7:0]};
+
+    // Increment PC by 4 using ADD module
+    ADD4 add_inst (.rs1(address), .rd(pc_plus_4));
 
     // Shift immediate left by 1 (multiplication by 2)
-    assign imm_shifted = {immgen[6:0], 1'b0}; 
+    assign imm_shifted = {immgen[62:0], 1'b0}; 
 
-    // Compute branch target address without using '+'
-    // assign branch_target = address ^ imm_shifted; 
-    // xor(branch_target, address, imm_shifted);
+    // Add 64-bit address1 and shifted immediate value
+    ADD add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target));
 
-    // AND operation between branch and zero without using '&'
-    // assign take_branch = ~(~branch | ~zero);
-    and(take_branch, branch, zero); 
+    // PCsrc for the MUX select line
+    and(PCsrc, branch, zero); 
 
-    // MUX to select between PC+4 or branch target
-    assign address_out = (take_branch) ? branch_target : pc_plus_4;
+    // MUX for the brach_target and pc_plus_4
+    assign address_out = PCsrc ? branch_target : pc_plus_4;
 
 endmodule
