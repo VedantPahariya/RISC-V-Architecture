@@ -33,6 +33,15 @@ module control(
                 branch_reg = 0;
                 alu_op_reg = 2'b10;
             end
+            7'b0010011: begin // I-format (for immediate add)
+                alu_src_reg = 1;
+                MemtoReg_reg = 0;
+                RegWrite_reg = 1;
+                MemRead_reg = 0;
+                MemWrite_reg = 0;
+                branch_reg = 0;
+                alu_op_reg = 2'b10;
+            end
             7'b0000011: begin // Load (ld)
                 alu_src_reg = 1;
                 MemtoReg_reg = 1;
