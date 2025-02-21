@@ -17,13 +17,16 @@ module mem(
     end
     end
 
+    reg [63:0] data_out_reg;
 
     always @ (posedge clk)
     begin if(MemRead)
     begin
-        data_out <= memory[address];
+        data_out_reg <= memory[address];
     end
     end
+
+    assign data_out = data_out_reg;
 
 endmodule
 
