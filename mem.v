@@ -9,19 +9,13 @@ module mem(
 );
     
     reg [63:0] memory [0:1023];
-
-    always @ (posedge clk)
-    begin if(MemWrite)
-    begin
-        memory[address] <= data_in;
-    end
-    end
-
     reg [63:0] data_out_reg;
 
-    always @ (posedge clk)
+    always @ (posedge clk) begin
+    begin if(MemWrite)
+        memory[address] <= data_in;
+    end
     begin if(MemRead)
-    begin
         data_out_reg <= memory[address];
     end
     end
