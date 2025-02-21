@@ -1,6 +1,7 @@
 module program_counter(
-    input [7:0] next_addr;
-    output [7:0] curr_addr;
+    input clk,
+    input [7:0] next_addr,
+    output [7:0] curr_addr
 );
 
     reg [7:0] PC;
