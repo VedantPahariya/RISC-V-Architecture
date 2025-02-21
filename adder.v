@@ -1,15 +1,15 @@
-module fa(a,b,c,sum,carry);
-    input signed a,b,c;
-    output signed sum,carry;
-    wire d,e,f;
+// module fa(a,b,c,sum,carry);
+//     input signed a,b,c;
+//     output signed sum,carry;
+//     wire d,e,f;
 
-    xor(sum,a,b,c);
-    and(d,a,b);
-    and(e,b,c);
-    and(f,c,a);
-    or(carry,d,e,f);
+//     xor(sum,a,b,c);
+//     and(d,a,b);
+//     and(e,b,c);
+//     and(f,c,a);
+//     or(carry,d,e,f);
 
-endmodule
+// endmodule
 
 module ADD4(rs1,rd);
 
@@ -31,23 +31,23 @@ module ADD4(rs1,rd);
 
 endmodule
 
-module ADD(rs1,rs2,rd);
+// module ADD(rs1,rs2,rd);
 
-    input signed [63:0] rs1,rs2;
-    output signed [7:0] rd;
-    wire [63:0] sum;
-    wire [64:0] carry;
-    assign carry[0] = 1'b0;
+//     input signed [63:0] rs1,rs2;
+//     output signed [7:0] rd;
+//     wire [63:0] sum;
+//     wire [64:0] carry;
+//     assign carry[0] = 1'b0;
 
-    genvar i;
-    generate  
-        for(i = 0;i < 64; i = i + 1) begin
-            fa FullAdder(rs1[i],rs2[i],carry[i],sum[i],carry[i+1]);
-        end
-    endgenerate
+//     genvar i;
+//     generate  
+//         for(i = 0;i < 64; i = i + 1) begin
+//             fa FullAdder(rs1[i],rs2[i],carry[i],sum[i],carry[i+1]);
+//         end
+//     endgenerate
 
-    assign rd = sum[7:0];
-endmodule
+//     assign rd = sum[7:0];
+// endmodule
 
 
 module adder(
