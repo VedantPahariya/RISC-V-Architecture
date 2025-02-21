@@ -59,7 +59,7 @@ module adder(
 );
 
     wire [7:0] pc_plus_4;       // Holds address + 4
-    wire [7:0] branch_target;   // Holds address + shifted immediate
+    wire [63:0] branch_target_64;   // Holds address + shifted immediate
     wire [63:0] imm_shifted;     // Shifted immediate value
     wire PCsrc;           // AND of branch and zero
 
@@ -74,11 +74,13 @@ module adder(
     assign imm_shifted = {immgen[62:0], 1'b0}; 
 
     // Add 64-bit address1 and shifted immediate value
-    ADD add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target));
+    ADD add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target_64));
 
+    wire branch_target_8;
+    assign branch_target_8 = branch_target_64[7:0];
     // PCsrc for the MUX select line
     and(PCsrc, branch, zero_flag); 
 
     // MUX for the brach_target and pc_plus_4
-    assign address_out = PCsrc ? branch_target : pc_plus_4;
+    assign address_out = PCsrc ? branch_target_8 : pc_plus_4;
 endmodule
