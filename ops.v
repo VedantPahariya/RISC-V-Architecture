@@ -162,7 +162,7 @@ endmodule
 module SLL(
     input signed [63:0] rs1,
     input signed [63:0] rs2,  
-    output reg overflow_flag  
+    output reg overflow_flag,
     output signed [63:0] rd,
     output reg carry_flag
 );
@@ -241,7 +241,7 @@ module SRL (rs1, rs2, rd,carry_flag,overflow_flag);
 
     assign carry_flag = |rs1[63-shift-1:0];
 
-    assign overflow_flag = xor x12(rs1[63],rd[63]);
+    xor(overflow_flag,rs1[63],rd[63]);
 
 
 endmodule
