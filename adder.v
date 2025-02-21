@@ -15,7 +15,7 @@ module ADD4(rs1,rd);
 
     // adds 4 in 8 bit addition
     input signed [7:0] rs1;
-    wire rs2;
+    wire [7:0] rs2;
     assign rs2 = 8'd4;  // need to add 4 to the PC address
     output signed [7:0] rd;
 
@@ -65,7 +65,7 @@ module adder(
 
     // extending the 8 bit address to 64 bit address
     wire [63:0] address1;
-    assign address1 = {{56{0}}, address[7:0]};
+    assign address1 = {{56{1'b0}}, address[7:0]};
 
     // Increment PC by 4 using ADD module
     ADD4 add_inst (.rs1(address), .rd(pc_plus_4));
