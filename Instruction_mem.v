@@ -13,9 +13,12 @@ module insmem(
     reg [7:0] memory [0:255];
     // instruction mem is in little endian format
 
+    initial begin
+        $readmemh("Instructions.mem", memory); 
+    end
     // access the memory location indicated by the 8 bit address
 
-    // reg [7:0] addres = 8'b00010101;
+    // reg [7:0] address = 8'h00;
 
        assign ctrl = memory[address][6:0];
        assign rd = {memory[address+1][3:0],memory[address][7]};
@@ -27,12 +30,13 @@ module insmem(
         // missed bits 25 to 31 for funct7  
 
     // initial begin
-    //     //print the 0th index of addres
-    //     $display("%d",addres[7]);
-    //     $display("%b",addres[7:0]);
-    //     // lmao
+    //     #1
+    //     $display("Address: %h", address);
+    //     $display("Instruction: %h", instruction);
+    //     $display("Control: %b", ctrl);
+    //     $display("rd: %b", rd);
+    //     $display("rs1: %b", rs1);
+    //     $display("rs2: %b", rs2);
     // end
-
-
 
 endmodule
