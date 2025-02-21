@@ -1,0 +1,8 @@
+`include "alu.v"
+`include "adder.v"
+`include "alu_control.v"
+`include "immgen.v"
+`include "instruction_mem.v"
+`include "control.v"
+`include "mem.v"
+`include "registers.v"

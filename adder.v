@@ -13,6 +13,7 @@ endmodule
 
 module ADD4(rs1,rd);
 
+    // adds 4 in 8 bit addition
     input signed [7:0] rs1;
     wire rs2;
     assign rs2 = 8'd4;  // need to add 4 to the PC address
@@ -53,7 +54,7 @@ module adder(
     input [7:0] address,      // PC address
     input [63:0] immgen,      // Immediate value
     input branch,             // Branch control signal
-    input zero,               // Zero flag
+    input zero_flag,               // Zero flag
     output wire [7:0] address_out // Output address
 );
 
@@ -76,7 +77,7 @@ module adder(
     ADD add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target));
 
     // PCsrc for the MUX select line
-    and(PCsrc, branch, zero); 
+    and(PCsrc, branch, zero_flag); 
 
     // MUX for the brach_target and pc_plus_4
     assign address_out = PCsrc ? branch_target : pc_plus_4;
