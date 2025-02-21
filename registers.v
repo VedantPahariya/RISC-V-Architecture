@@ -11,27 +11,26 @@ module register(
     output [63:0] read_data_2
 );
 
-    reg [63:0] memory [0:31];
+    reg [63:0] register [0:31];
     
+    initial begin
+        $readmemh("reglog.mem", register); 
+    end
 
-    
-     assign read_data_1 = memory[rs1];
-     assign read_data_2 = memory[rs2];
+     assign read_data_1 = register[rs1];
+     assign read_data_2 = register[rs2];
 
-
-
-    //here only at next clk we wrrite the data
+    //here only at next clk we write the data
     always @ (posedge clk) begin
         if(RegWrite)
         begin
-            memory[rd] = wrt_data;
+            register[rd] = wrt_data;
+            $writememh("reglog.mem", register);  // Save updated registers to file
         end
     end    
 
-    initial begin
-        memory[0] = 64'b0;
-    end
-
-
+    // initial begin
+    //     memory[0] = 64'b0;
+    // end
 
 endmodule
