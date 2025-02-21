@@ -1,11 +1,12 @@
 module alucontrol(
     input [31:0] instruction,
     input [1:0] alu_op,
-    output reg [3:0] alu_control
+    output [3:0] alu_control_op
 );
 
     wire [6:0] funct7;
     wire [2:0] funct3;
+    reg [3:0] alu_control;
     
     assign funct7 = instruction[31:25];
     assign funct3 = instruction[14:12];
@@ -30,4 +31,6 @@ module alucontrol(
             default: alu_control = 4'b0000; // Default
         endcase
     end
+
+    assign alu_control_op = alu_control;
 endmodule

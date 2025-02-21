@@ -55,7 +55,7 @@ module adder(
     input [63:0] immgen,      // Immediate value
     input branch,             // Branch control signal
     input zero_flag,               // Zero flag
-    output wire [7:0] address_out // Output address
+    output [7:0] address_out // Output address
 );
 
     wire [7:0] pc_plus_4;       // Holds address + 4
