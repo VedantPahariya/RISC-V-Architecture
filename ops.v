@@ -223,9 +223,10 @@ module SLL(
 
 endmodule
 
-module SRL (rs1, rs2, rd,carry_flag,overflow_flag);
+module SRL (rs1, rs2, rd,zero_flag,carry_flag,overflow_flag);
     input signed [63:0] rs1, rs2;
     output signed [63:0] rd;
+    output zero_flag,carry_flag,overflow_flag;
 
     wire [5:0] shift;
     assign shift = rs2[5:0];
@@ -247,10 +248,10 @@ module SRL (rs1, rs2, rd,carry_flag,overflow_flag);
 endmodule
 
 
-module SRA (rs1, rs2, rd, carry_flag,overflow_flag);
+module SRA (rs1, rs2, rd, zero_flag,carry_flag,overflow_flag);
     input signed [63:0] rs1, rs2;
     output signed [63:0] rd;
-    output carry_flag;
+    output zero_flag,carry_flag,overflow_flag;
 
     wire [5:0] shift;
     assign shift = rs2[5:0];
