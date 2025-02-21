@@ -158,20 +158,17 @@ endmodule
 
 // endmodule
 
-
 module SLL(
     input signed [63:0] rs1,
     input signed [63:0] rs2,  
-    output reg overflow_flag  
+    output  signed [63:0] overflow_flag, 
     output signed [63:0] rd,
-    output reg carry_flag
+    output  signed [63:0] carry_flag
 );
-
     wire [5:0] shift;
     assign shift = rs2[5:0];
 
-     wire [63:0] stage1, stage2, stage3, stage4, stage5, stage6;
-
+    wire [63:0] stage1, stage2, stage3, stage4, stage5, stage6,over,car;
 
     assign stage1 = shift[0] ? {rs1[62:0], 1'b0} : rs1;
     assign stage2 = shift[1] ? {stage1[61:0], 2'b0} : stage1;
@@ -182,55 +179,56 @@ module SLL(
 
     assign rd = stage6;
 
-    wire signed [63:0] largest_pos, largest_neg;
+    wire signed [63:0] largest_pos = 64'h7FFF_FFFF_FFFF_FFFF;  
+    wire signed [63:0] largest_neg = 64'h8000_0000_0000_0000;  
+
     wire signed [63:0] pos_threshold, neg_threshold;
     wire signed [63:0] pos_check, neg_check;
     
-    wire temp1;
-    wire temp2;
+    wire [63:0] temp1, temp2;
 
-    assign largest_pos = 64'h7FFF_FFFF_FFFF_FFFF;  
-    assign largest_neg = 64'h8000_0000_0000_0000;  
-
-    SRL shift_right_pos(largest_pos, rs2, pos_threshold,temp1,temp2);
-    SRL shift_right_neg(largest_neg, rs2, neg_threshold,temp1,temp2);
+    SRL shift_right_pos(largest_pos, rs2, pos_threshold, temp1, temp2);
+    SRL shift_right_neg(largest_neg, rs2, neg_threshold, temp1, temp2);
 
     SLT signed_compare(rs1, pos_threshold, pos_check);
     SLT signed_compare_neg(rs1, neg_threshold, neg_check);
 
     always @(*) begin
         if (rs1 >= 0) 
-            overflow_flag = pos_check[0]; 
+         assign over = pos_check[0]; 
         else 
-            overflow_flag = neg_check[0]; 
+         assign over = neg_check[0]; 
     end
-
+    assign overflow_flag = over;
 
     always @(*) begin
-        carry_flag = 0;
+        car = 0;
         case (shift)
-            6'd1: carry_flag = rs1[63];             
-            6'd2: carry_flag = |rs1[63:62];        
-            6'd4: carry_flag = |rs1[63:60];        
-            6'd8: carry_flag = |rs1[63:56];         
-            6'd16: carry_flag = |rs1[63:48];        
-            6'd32: carry_flag = |rs1[63:32];   
-            default: carry_flag = 0;
+            6'd1: car = rs1[63];             
+            6'd2: car = |rs1[63:62];        
+            6'd4: car = |rs1[63:60];        
+            6'd8: car = |rs1[63:56];         
+            6'd16: car = |rs1[63:48];        
+            6'd32: car = |rs1[63:32];   
+            default: car = 0;
         endcase
     end
-
-
+    assign carry_flag = car;
 
 endmodule
 
-module SRL (rs1, rs2, rd,carry_flag,overflow_flag);
-    input signed [63:0] rs1, rs2;
-    output signed [63:0] rd;
+module SRL(
+    input signed [63:0] rs1,
+    input signed [63:0] rs2,  
+    output signed [63:0] rd,
+    output signed [63:0] overflow_flag,
+    output signed [63:0] carry_flag
+);
 
     wire [5:0] shift;
     assign shift = rs2[5:0];
 
-    wire [63:0] stage1, stage2, stage3, stage4, stage5;
+    wire [63:0] stage1, stage2, stage3, stage4, stage5,car,over;
 
     assign stage1 = shift[0] ? {1'b0, rs1[63:1]} : rs1;
     assign stage2 = shift[1] ? {2'b0, stage1[63:2]} : stage1;
@@ -238,37 +236,40 @@ module SRL (rs1, rs2, rd,carry_flag,overflow_flag);
     assign stage4 = shift[3] ? {8'b0, stage3[63:8]} : stage3;
     assign stage5 = shift[4] ? {16'b0, stage4[63:16]} : stage4;
     assign rd    = shift[5] ? {32'b0, stage5[63:32]} : stage5;
-
-    assign carry_flag = |rs1[63-shift-1:0];
-
-    assign overflow_flag = xor x12(rs1[63],rd[63]);
-
-
+     xor x123(over,rs1[63],rd[63]);
+    assign overflow_flag = over;
+    assign car = |rs1[63:1]; 
+    assign carry_flag = car;
 endmodule
 
-
-module SRA (rs1, rs2, rd, carry_flag,overflow_flag);
-    input signed [63:0] rs1, rs2;
-    output signed [63:0] rd;
-    output carry_flag;
+module SRA(
+    input signed [63:0] rs1,
+    input signed [63:0] rs2,  
+    output signed [63:0] rd,
+    output signed [63:0] carry_flag,
+    output signed [63:0] overflow_flag
+);
 
     wire [5:0] shift;
     assign shift = rs2[5:0];
 
-    wire [63:0] stage1, stage2, stage3, stage4, stage5;
+    wire [63:0] stage1, stage2, stage3, stage4, stage5,over,car;
 
     assign stage1 = shift[0] ? {rs1[63], rs1[63:1]} : rs1;
     assign stage2 = shift[1] ? {{2{rs1[63]}}, stage1[63:2]} : stage1;
     assign stage3 = shift[2] ? {{4{rs1[63]}}, stage2[63:4]} : stage2;
     assign stage4 = shift[3] ? {{8{rs1[63]}}, stage3[63:8]} : stage3;
     assign stage5 = shift[4] ? {{16{rs1[63]}}, stage4[63:16]} : stage4;
-    assign rd    = shift[5] ? {{32{rs1[63]}}, stage5[63:32]} : stage5;
-
-    assign carry_flag = |rs1[shift-1:0];
-
-    assign overflow_flag = 1'b0;
+    assign rd     = shift[5] ? {{32{rs1[63]}}, stage5[63:32]} : stage5;
+    xor x123(over,rs1[63],rd[63]);  
+    assign overflow_flag = over;
+    assign car = |rs1[63:1];
+    assign carry_flag = car;
 
 endmodule
+
+ 
+
 
 
 
@@ -278,11 +279,11 @@ module SLT(rs1,rs2,rd);
 
     input signed [63:0] rs1,rs2;
     output signed [63:0] rd;
-    wire [63:0] temp, temp2, temp3, shift;
+    wire [63:0] temp, temp2, temp3, shift,temp_temp1,temp_temp2;
     assign shift = 64'd63;
     wire zero_flag, carry_flag,overflow_flag;
     SUB s(rs1,rs2,temp,zero_flag, carry_flag,overflow_flag);
-    SRL shift_right(temp,shift,temp2);
+    SRL shift_right(temp,shift,temp2,temp_temp1,temp_temp2);
     assign temp3 = {{63'b0},overflow_flag};
     XOR x(temp2,temp3,rd,zero_flag);
 
@@ -327,9 +328,9 @@ module SLTU(rs1,rs2,rd);
 
     input signed [63:0] rs1,rs2;
     output signed [63:0] rd;
-    wire [63:0] mask, t1,t2;
+    wire [63:0] mask, t1,t2,temp12,temp23;
     wire zero_flag;
-    SLL shift_left(64'd1,64'd63,mask);
+    SLL shift_left(64'd1,64'd63,mask,temp12,temp23);
     XOR x1(rs1,mask,t1,zero_flag);
     XOR x2(rs2,mask,t2,zero_flag);
     SLT comp(t1,t2,rd);
