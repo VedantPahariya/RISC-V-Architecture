@@ -8,7 +8,7 @@ module imm_gen(
     assign opcode = instruction[6:0];
     always @(*) begin
         
-        case (ctrl)
+        case (opcode)
             7'b0010011: begin // I-format (for immediate add)
                 immediate = {{52{instruction[31]}},instruction[31:20]};
             end
