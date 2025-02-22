@@ -89,7 +89,6 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     
                     4'b0100 : begin
                         ALU_output = sll_out;
-                        command
                         // $display("\n SLL operation");
                         // $display("rs1=%d SLL rs2=%d = %d", rs1, rs2, ALU_output);
                     end

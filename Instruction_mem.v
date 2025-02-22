@@ -38,7 +38,7 @@ module insmem(
     //     $display("rs2: %b", rs2);
     // end
     
-    always @(ctrl) begin
+    always @(address) begin
         
         case (ctrl)
             7'b0010011: begin // I-format (for immediate add)
