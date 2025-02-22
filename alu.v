@@ -89,6 +89,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     
                     4'b0100 : begin
                         ALU_output = sll_out;
+                        command = "SLL";
                         // $display("\n SLL operation");
                         // $display("rs1=%d SLL rs2=%d = %d", rs1, rs2, ALU_output);
                     end
@@ -97,6 +98,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
         // 4'b0101 : SRL
                 4'b0101 : begin
                     ALU_output = srl_out;
+                    command = "SRL";
                     // $display("\n SRL operation");
                     // $display("rs1=%d SRL rs2=%d = %d", rs1, rs2, ALU_output);
                 end
@@ -107,6 +109,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     zero_output = sub_zero;
                     carry_output = sub_carry;
                     overflow_output = sub_overflow;
+                    command = "SUB";
                     // $display("\n SUB operation");
                     // $display("rs1=%d - rs2=%d = %d", rs1, rs2, ALU_output);
                 end
@@ -114,23 +117,32 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
         // 4'b0111 : SRA
                 4'b0111 : begin
                     ALU_output = sra_out;
+                    command = "SRA";
                 end
                 
         // 4'b1000 : SLT
                 4'b1000 : begin
                     ALU_output = slt_out;
+                    command = "SLT";
                 end
 
         // 4'b1001 : SLTU
                 4'b1001 : begin
                     ALU_output = sltu_out;
+                    command = "SLTU";
                 end
-    
+
+        default : begin
+            ALU_output = 64'b0;
+            command = "Invalid";
+        end
+
         endcase
     end
 
-    // always@(rs1,rs2) begin
-    //     $display("rs1=%d %s rs2=%d \t", rs1, command, rs2);
-    // end
-
+    always@(rs1, rs2, control) 
+    begin
+        #1
+        $display("\n ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
+    end
 endmodule
