@@ -47,14 +47,18 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
             4'b0000 : begin
                 ALU_output = and_out;
                 zero_output = and_zero;
+                $display("\n AND operation");
+                $display("rs1=%d AND rs2=%d = %d", rs1, rs2, ALU_output);
             end
 
         // 4'b0001 : OR
-                
-                4'b0001 : begin
-                    ALU_output = or_out;
-                    zero_output = or_zero;
-                end
+            
+            4'b0001 : begin
+                ALU_output = or_out;
+                zero_output = or_zero;
+                $display("\n OR operation");
+                $display("rs1=%d OR rs2=%d = %d", rs1, rs2, ALU_output);
+            end
            
         // 4'b0010 : ADD
             
@@ -63,24 +67,32 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     zero_output = add_zero;
                     carry_output = add_carry;
                     overflow_output = add_overflow;
+                    $display("\n ADD operation");
+                    $display("rs1=%d + rs2=%d = %d", rs1, rs2, ALU_output);
                 end
 
         // 4'b0011 : XOR
                 4'b0011 : begin
                     ALU_output = xor_out;
                     zero_output = xor_zero;
+                    $display("\n XOR operation");
+                    $display("rs1=%d XOR rs2=%d = %d", rs1, rs2, ALU_output);
                 end
 
         // 4'b0100 : SLL
                     
                     4'b0100 : begin
                         ALU_output = sll_out;
+                        $display("\n SLL operation");
+                        $display("rs1=%d SLL rs2=%d = %d", rs1, rs2, ALU_output);
                     end
 
 
         // 4'b0101 : SRL
                 4'b0101 : begin
                     ALU_output = srl_out;
+                    $display("\n SRL operation");
+                    $display("rs1=%d SRL rs2=%d = %d", rs1, rs2, ALU_output);
                 end
 
         // 4'b0110 : SUB
@@ -89,6 +101,8 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     zero_output = sub_zero;
                     carry_output = sub_carry;
                     overflow_output = sub_overflow;
+                    $display("\n SUB operation");
+                    $display("rs1=%d - rs2=%d = %d", rs1, rs2, ALU_output);
                 end
 
         // 4'b0111 : SRA
