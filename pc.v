@@ -10,10 +10,10 @@ module program_counter(
         PC = 8'b0;
     end
 
+    assign curr_addr = PC;
+
     always @(posedge clk) begin
         PC <= next_addr;
     end
-
-    assign curr_addr = PC;
 
 endmodule

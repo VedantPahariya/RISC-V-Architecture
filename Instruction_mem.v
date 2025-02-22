@@ -19,11 +19,12 @@ module insmem(
 
     //  reg [7:0] address = 8'h0;
 
-       assign ctrl = memory[address][6:0];
-       assign rd = {memory[address+1][3:0],memory[address][7]};
-       assign rs1 = {memory[address+2][3:0], memory[address+1][7]}; //skipped 3 bits for funct3
-       assign rs2 = {memory[address+3][0],memory[address+2][7:4]};
-       assign instruction = {memory[address+3],memory[address+2],memory[address+1],memory[address]};
+        reg [6:0] ctrl_reg;
+        reg [5:0] rs1_reg;
+        reg [5:0] rs2_reg;
+        reg [5:0] rd_reg;
+        reg [31:0] instruction_reg;
+
 
         // missed bits 12 to 14 for funct3
         // missed bits 25 to 31 for funct7  
@@ -39,8 +40,18 @@ module insmem(
     // end
     
     always @(address) begin
+
+        ctrl_reg = memory[address][6:0];
+        rd_reg = {memory[address+1][3:0],memory[address][7]};
+        rs1_reg = {memory[address+2][3:0], memory[address+1][7]}; //skipped 3 bits for funct3
+        rs2_reg = {memory[address+3][0],memory[address+2][7:4]};
+        instruction_reg = {memory[address+3],memory[address+2],memory[address+1],memory[address]};
         
         case (ctrl)
+            7'b0110011: begin // R-format 
+                $display("R-format with opcode 0110011");
+                $display("adding rs1=%d to rs2=%d into rd=%d", rs1,rs2, rd);
+            end
             7'b0010011: begin // I-format (for immediate add)
                 $display("I-format with opcode 0010011");
                 $display("adding rs1=%d with imm=%d in rd=%d \t \t x%d = x%d + %d", rs1, instruction[31:20], rd, rd, rs1, instruction[31:20]);
@@ -63,5 +74,12 @@ module insmem(
             end
         endcase
     end
+
+    assign ctrl = ctrl_reg;
+    assign rd = rd_reg;
+    assign rs1 = rs1_reg; //skipped 3 bits for funct3
+    assign rs2 = rs2_reg;
+    assign instruction = instruction_reg;
+
 
 endmodule

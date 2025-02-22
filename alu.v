@@ -129,8 +129,8 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
         endcase
     end
 
-    always@(rs1,rs2) begin
-        $display("rs1=%d %s rs2=%d \t", rs1, command, rs2);
-    end
+    // always@(rs1,rs2) begin
+    //     $display("rs1=%d %s rs2=%d \t", rs1, command, rs2);
+    // end
 
 endmodule
