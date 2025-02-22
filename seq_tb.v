@@ -19,7 +19,7 @@ module tb_seq_wrapper;
     // Initial block to run the simulation
     initial begin
         // Run the simulation for a specific time
-        #1000; // Run for 1000ns
+        #40; // Run for 1000ns
         $stop; // Stop the simulation
     end
 endmodule

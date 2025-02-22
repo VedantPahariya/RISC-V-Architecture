@@ -57,7 +57,7 @@ wire zero, carry, overflow;
 // Data Memory
 wire [63:0] data_out;
 
-program_counter pc_inst(.next_addr(adder_pc), .curr_addr(pc_im));
+program_counter pc_inst(.clk(clk), .next_addr(adder_pc), .curr_addr(pc_im));
 insmem ins_inst(.address(pc_im), .ctrl(ctrl), .rs1(readr1), . rs2(readr2), .rd(write_rd), .instruction(instruction));
 alucontrol aluc_inst(.instruction(instruction), .alu_op(alu_op), .alu_control_op(aluc_out));
 control ctrl_inst(.ctrl(ctrl), .branch(branch), .RegWrite(RegWrite), .MemtoReg(MemtoReg), .MemRead(MemRead), .MemWrite(MemWrite), .alu_src(alu_src), .alu_op(alu_op));
