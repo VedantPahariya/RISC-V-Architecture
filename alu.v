@@ -23,6 +23,9 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     wire add_zero, sub_zero, and_zero, or_zero,xor_zero;
     wire add_carry, sub_carry;
     wire add_overflow, sub_overflow;
+    wire sll_zero, sll_carry, sll_overflow;
+    wire srl_zero, srl_carry, srl_overflow;
+    wire sra_zero, sra_carry, sra_overflow;
 
     // Hardware modules cannot be generated in an always block
     ADD add_inst (rs1,rs2,add_out,1'b0,add_zero,add_carry,add_overflow);
@@ -30,9 +33,9 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     AND and_inst (rs1,rs2,and_out,and_zero);
     OR or_inst (rs1,rs2,or_out,or_zero);
     XOR xor_inst (rs1,rs2,xor_out,xor_zero);
-    SLL sll_inst (rs1,rs2,sll_out);
-    SRL srl_inst (rs1,rs2,srl_out);
-    SRA sra_inst (rs1,rs2,sra_out);
+    SLL sll_inst (rs1,rs2,sll_out,sll_zero,sll_carry,sll_overflow);
+    SRL srl_inst (rs1,rs2,srl_out,srl_zero,srl_carry,srl_overflow);
+    SRA sra_inst (rs1,rs2,sra_out,sra_zero,sra_carry,sra_overflow);
     SLT slt_inst (rs1,rs2,slt_out);
     SLTU sltu_inst (rs1,rs2,sltu_out);
 
