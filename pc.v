@@ -6,6 +6,10 @@ module program_counter(
 
     reg [7:0] PC;
 
+    initial begin
+        PC = 8'b0;
+    end
+
     always @(posedge clk) begin
         PC <= next_addr;
     end
