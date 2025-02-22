@@ -39,6 +39,8 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     SLT slt_inst (rs1,rs2,slt_out);
     SLTU sltu_inst (rs1,rs2,sltu_out);
 
+    reg [100:0] command;
+
     always@(*) begin
 
         case(control)
@@ -47,6 +49,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
             4'b0000 : begin
                 ALU_output = and_out;
                 zero_output = and_zero;
+                command = "AND";
                 // $display("\n AND operation");
                 // $display("rs1=%d AND rs2=%d = %d", rs1, rs2, ALU_output);
             end
@@ -56,6 +59,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
             4'b0001 : begin
                 ALU_output = or_out;
                 zero_output = or_zero;
+                command = "OR";
                 // $display("\n OR operation");
                 // $display("rs1=%d OR rs2=%d = %d", rs1, rs2, ALU_output);
             end
@@ -67,6 +71,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     zero_output = add_zero;
                     carry_output = add_carry;
                     overflow_output = add_overflow;
+                    command = "ADD";
                     // $display("\n ADD operation");
                     // $display("rs1=%d + rs2=%d = %d", rs1, rs2, ALU_output);
                 end
@@ -75,6 +80,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                 4'b0011 : begin
                     ALU_output = xor_out;
                     zero_output = xor_zero;
+                    command = "XOR";
                     // $display("\n XOR operation");
                     // $display("rs1=%d XOR rs2=%d = %d", rs1, rs2, ALU_output);
                 end
@@ -83,6 +89,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     
                     4'b0100 : begin
                         ALU_output = sll_out;
+                        command
                         // $display("\n SLL operation");
                         // $display("rs1=%d SLL rs2=%d = %d", rs1, rs2, ALU_output);
                     end
@@ -121,7 +128,10 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                 end
     
         endcase
-    
+    end
+
+    always@(rs1,rs2) begin
+        $display("rs1=%d %s rs2=%d \t", rs1, command, rs2);
     end
 
 endmodule
