@@ -2,7 +2,6 @@
 
 module insmem(
     input [7:0] address,
-    //output [31:0] data_out
     output [6:0] ctrl,
     output [5:0] rs1,
     output [5:0] rs2,
