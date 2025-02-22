@@ -25,6 +25,7 @@ module register(
         if(RegWrite)
         begin
             register[rd] = wrt_data;
+            $display("Register %d updated to %d", rd, wrt_data);
             $writememh("reglog.mem", register);  // Save updated registers to file
         end
     end    
