@@ -4,14 +4,15 @@ module alucontrol(
     output [3:0] alu_control_op
 );
 
-    wire [6:0] funct7;
-    wire [2:0] funct3;
+    reg [6:0] funct7;
+    reg [2:0] funct3;
     reg [3:0] alu_control;
-    
-    assign funct7 = instruction[31:25];
-    assign funct3 = instruction[14:12];
 
     always @(*) begin
+
+        funct7 = instruction[31:25];
+        funct3 = instruction[14:12];
+
         case (alu_op)
             2'b00: alu_control = 4'b0010; // ADD (for lw/sw)
             2'b01: alu_control = 4'b0110; // SUB (for beq)

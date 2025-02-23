@@ -10,16 +10,21 @@ module tb_seq_wrapper;
         .clk(clk)
     );
 
-    // Clock generation
-    initial begin
-        clk = 0;
-        forever #10 clk = ~clk; // Pulse clock every 10ns
-    end
 
     // Initial block to run the simulation
     initial begin
         // Run the simulation for a specific time
-        #40; // Run for 1000ns
+        clk = 0;
+        #100; // Run for 1000ns
         $stop; // Stop the simulation
+        
     end
+
+    always #10 clk = ~clk;
+
+    always @(posedge clk) begin
+        $strobe("clock high");
+    end
+
 endmodule
+

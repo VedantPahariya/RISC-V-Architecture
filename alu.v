@@ -51,7 +51,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                 zero_output = and_zero;
                 command = "AND";
                 // $display("\n AND operation");
-                // $display("rs1=%d AND rs2=%d = %d", rs1, rs2, ALU_output);
+                //$display("rs1=%d AND rs2=%d = %d", rs1, rs2, ALU_output);
             end
 
         // 4'b0001 : OR
@@ -73,7 +73,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
                     overflow_output = add_overflow;
                     command = "ADD";
                     // $display("\n ADD operation");
-                    // $display("rs1=%d + rs2=%d = %d", rs1, rs2, ALU_output);
+                    //$display("rs1=%d + rs2=%d = %d", rs1, rs2, ALU_output);
                 end
 
         // 4'b0011 : XOR
@@ -138,11 +138,13 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
         end
 
         endcase
+
+        //$display("\n ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
     end
 
-    always@(rs1, rs2, control) 
-    begin
-        #1
-        $display("\n ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
-    end
+    // always@(rs1, rs2, control) 
+    // begin
+    //     #1
+    //     $display("\n ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
+    // end
 endmodule

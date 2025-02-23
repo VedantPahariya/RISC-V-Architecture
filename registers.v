@@ -17,18 +17,23 @@ module register(
         $readmemh("reglog.mem", register); 
     end
 
-     assign read_data_1 = register[rs1];
-     assign read_data_2 = register[rs2];
+    reg [63:0] read_data_1_reg;
+    reg [63:0] read_data_2_reg;
 
     //here only at next clk we write the data
-    always @ (posedge clk) begin
+    always @ (negedge clk) begin
         if(RegWrite)
+        read_data_1_reg = register[rs1];
+        read_data_2_reg = register[rs2];
         begin
             register[rd] = wrt_data;
             $display("Register %d updated to %d", rd, wrt_data);
             $writememh("reglog.mem", register);  // Save updated registers to file
         end
     end    
+
+    assign read_data_1 = read_data_1_reg;
+    assign read_data_2 = read_data_2_reg;
 
     // initial begin
     //     memory[0] = 64'b0;
