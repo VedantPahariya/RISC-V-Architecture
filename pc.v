@@ -15,7 +15,8 @@ module program_counter(
 
     always @(posedge clk) begin
         PC <= next_addr;
-        $display("PC updated to %d", next_addr);
+        $display("----------------------------------------------------------");
+        $display("\n \nPC updated to %d", next_addr);
     end
 
 endmodule
