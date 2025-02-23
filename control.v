@@ -13,7 +13,7 @@ module control(
     reg branch_reg, RegWrite_reg, MemtoReg_reg, MemRead_reg, MemWrite_reg, alu_src_reg;
     reg [1:0] alu_op_reg;
 
-    always @(*) begin
+    always @(ctrl) begin
         // Default values
         branch_reg = 0;
         RegWrite_reg = 0;

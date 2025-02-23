@@ -20,11 +20,15 @@ module register(
     reg [63:0] read_data_1_reg;
     reg [63:0] read_data_2_reg;
 
-    //here only at next clk we write the data
-    always @ (negedge clk) begin
-        if(RegWrite)
+    always @ (rs1 or rs2) begin
         read_data_1_reg = register[rs1];
         read_data_2_reg = register[rs2];
+    end
+
+    //here only at next clk we write the data
+    always @ (negedge clk) begin
+        $display("RegWrite: %d", RegWrite);
+        if(RegWrite)
         begin
             register[rd] = wrt_data;
             $display("Register %d updated to %d", rd, wrt_data);

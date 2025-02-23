@@ -5,10 +5,17 @@ module wb_mux(
     input MemtoReg
 );
 
-    assign writeback = MemtoReg ? mem_out : alu_out;
+    reg [63:0] writeback_reg;
 
-    always @(writeback)
+    // the writeback is updating at next clock pulse only
+
+    always @(*)
     begin
-        $display("\n Wrtback_mux: MemtoReg:%d mem_out:%d alu_out:%d Writeback:%d",MemtoReg, mem_out, alu_out, writeback);
+        writeback_reg = MemtoReg ? mem_out : alu_out;
+        //$display("Writeback updated to %d", writeback_reg);
+        //some strange behaviour in writeback output
     end
+
+    assign writeback = writeback_reg;
+
 endmodule
