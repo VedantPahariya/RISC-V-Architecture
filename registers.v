@@ -6,7 +6,7 @@ module register(
     input [5:0] rs1,
     input [5:0] rs2,
     input [5:0] rd,
-    input RegWrite, //for the controll for writting
+    input RegWrite, //for the control for writing
     output [63:0] read_data_1,
     output [63:0] read_data_2
 );
@@ -25,7 +25,7 @@ module register(
         read_data_2_reg = register[rs2];
     end
 
-    //here only at next clk we write the data
+    //here only at negative edge of clk we write the data
     always @ (negedge clk) begin
         $display("RegWrite: %d", RegWrite);
         if(RegWrite)

@@ -18,4 +18,6 @@ module wb_mux(
 
     assign writeback = writeback_reg;
 
+    //assign writeback_reg = MemtoReg ? mem_out : alu_out;
+
 endmodule
