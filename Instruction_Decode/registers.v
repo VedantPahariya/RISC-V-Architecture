@@ -14,7 +14,7 @@ module register(
     reg [63:0] register [0:31];
     
     initial begin
-        $readmemh("Instruction_Decode/reglog.mem", register); 
+        $readmemh("Registerlog.mem", register); 
     end
 
     reg [63:0] read_data_1_reg;
@@ -32,7 +32,7 @@ module register(
         begin
             register[rd] = wrt_data;
             $display("\n --> Register %d updated to %d", rd, wrt_data);
-            $writememh("reglog.mem", register);  // Save updated registers to file
+            $writememh("Registerlog.mem", register);  // Save updated registers to file
         end
     end    
 

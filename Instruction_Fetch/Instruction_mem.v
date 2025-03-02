@@ -13,7 +13,7 @@ module insmem(
     // instruction mem is in little endian format
 
     initial begin
-        $readmemh("Instruction_Fetch/Instructions.mem", memory); 
+        $readmemh("Instructions.mem", memory); 
     end
     // access the memory location indicated by the 8 bit address
 
