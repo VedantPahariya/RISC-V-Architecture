@@ -1,4 +1,4 @@
-`include "ops.v"
+`include "Execute/ops.v"
 
 // carry flag : add two n bit binary numbers and consider the output to be unsigned. If value doesnt lie within [0,2^n-1] set carry
 // overflow flag: add two n bit binary numbers and consider the output to be signed. If the number does not lie within [-2^(n-1), 2^(n-1)-1] set overflow

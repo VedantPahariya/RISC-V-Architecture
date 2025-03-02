@@ -14,7 +14,7 @@ module register(
     reg [63:0] register [0:31];
     
     initial begin
-        $readmemh("reglog.mem", register); 
+        $readmemh("Instruction_Decode/reglog.mem", register); 
     end
 
     reg [63:0] read_data_1_reg;
