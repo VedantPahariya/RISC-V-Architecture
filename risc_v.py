@@ -11,6 +11,7 @@ instruction_map = {
 
 registers = {f"x{i}": format(i, "05b") for i in range(32)}  # x0 - x31 in binary
 
+
 def assemble(instruction):
     parts = instruction.replace(',', '').split()
     if not parts:
@@ -37,11 +38,20 @@ def assemble(instruction):
         imm_high, imm_low = imm[:7], imm[7:]
         binary = instruction_map[mnemonic].replace("rs1", rs1).replace("rs2", registers[rs2]).replace("imm[11:5]", imm_high).replace("imm[4:0]", imm_low)
     
-    elif mnemonic == "beq":  # Conditional branch with target
-        rs1, rs2, target = registers[parts[1]], registers[parts[2]], int(parts[3])
-        imm = format(target * 2, '013b')  # Convert target to 13-bit immediate (PC-relative)
-        imm_high, imm_low = imm[0] + imm[2:8], imm[8:] + imm[1]
-        binary = instruction_map[mnemonic].replace("rs1", rs1).replace("rs2", rs2).replace("imm[12|10:5]", imm_high).replace("imm[4:1|11]", imm_low)
+    elif mnemonic == "beq":  # Conditional branch
+            rs1, rs2, target = registers[parts[1]], registers[parts[2]], int(parts[3])
+            
+            # Target offset should be 12 bits (representing a 13-bit offset with LSB=0)
+            imm = format(target & 0xFFF, '012b')  # 12-bit immediate
+            
+            # SB-type bit arrangement
+            # imm[12|10:5] = imm[11|9:4] in zero-indexed (12-bit immediate)
+            # imm[4:1|11] = imm[3:0|10] in zero-indexed (12-bit immediate)
+            imm_high = imm[0] + imm[2:7]      # First 7 bits (including sign bit)
+            imm_low = imm[8:11] + imm[1]     # Last 5 bits rearranged
+            
+            binary = instruction_map[mnemonic].replace("rs1", rs1).replace("rs2", rs2)
+            binary = binary.replace("imm[12|10:5]", imm_high).replace("imm[4:1|11]", imm_low)
     
     else:
         return None
@@ -52,7 +62,7 @@ def assemble(instruction):
 
 def main():
     input_file = "input.txt"
-    output_file = "Instruction_Fetch/Instructions.mem"
+    output_file = "Instructions.mem"
 
     try:
         with open(input_file, "r") as f:
