@@ -9,12 +9,13 @@ instruction_map = {
     "beq":  "imm[12|10:5] rs2 rs1 000 imm[4:1|11] 1100011",
 }
 
-registers = {
-    f"x{i}": format(i, "05b") for i in range(32)  # Automatically generate x0-x31
-}
+registers = {f"x{i}": format(i, "05b") for i in range(32)}  # x0 - x31 in binary
 
 def assemble(instruction):
     parts = instruction.replace(',', '').split()
+    if not parts:
+        return None
+
     mnemonic = parts[0]
     
     if mnemonic in ["add", "and", "or", "xor"]:  # R-type
@@ -50,17 +51,28 @@ def assemble(instruction):
     return little_endian
 
 def main():
-    with open("Instruction_Fetch/Instructions.mem", "w") as f:
-        while True:
-            user_input = input("Enter RISC-V instruction (or 'exit' to quit): ")
-            if user_input.lower() == 'exit':
-                break
-            hex_code = assemble(user_input)
-            if hex_code:
-                f.write(hex_code + "\n\n")
-                print(f"Hex (Little Endian):\n{hex_code}")
-            else:
-                print("Invalid instruction.")
+    input_file = "input.txt"
+    output_file = "Instruction_Fetch/Instructions.mem"
+
+    try:
+        with open(input_file, "r") as f:
+            instructions = f.readlines()
+
+        with open(output_file, "w") as f:
+            for line in instructions:
+                line = line.strip()
+                if line and not line.startswith("#"):  # Ignore empty lines and comments
+                    hex_code = assemble(line)
+                    if hex_code:
+                        f.write(hex_code + "\n\n")
+                        print(f"Converted: {line} ->\n{hex_code}\n")
+                    else:
+                        print(f"Invalid instruction: {line}")
+
+        print(f"\nHex instructions saved to {output_file}")
+
+    except FileNotFoundError:
+        print(f"Error: {input_file} not found. Please create the file and add instructions.")
 
 if __name__ == "__main__":
     main()

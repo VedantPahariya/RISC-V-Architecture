@@ -1,0 +1,6 @@
+addi x11, x0, 5
+addi x12, x0, 5
+beq x11, x12, 4
+addi x13, x0, 0
+addi x13, x0, 1
+
