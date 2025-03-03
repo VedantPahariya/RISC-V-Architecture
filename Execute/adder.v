@@ -73,7 +73,8 @@ module adder(
     // Shift immediate left by 1 (multiplication by 2)
     assign imm_shifted = {immgen[62:0], 1'b0}; 
     always @(immgen) begin #1
-        $display("\n --> adder: immgen:%d imm_shifted:%d zero_flag:%d",immgen, imm_shifted,zero_flag);
+        //$display("\n --> adder: immgen:%d imm_shifted:%d zero_flag:%d",immgen, imm_shifted,zero_flag);
+        $display("\n --> adder:zero_flag:%d",zero_flag);
     end
     
     wire signed[7:0] branch_target_8;

@@ -34,7 +34,7 @@ module imm_gen(
             end
         endcase
 
-    $display("\n --> immgen: %s Immediate:%d",command, immediate);
+    //$display("\n --> immgen: %s Immediate:%d",command, immediate);
 
     end
 

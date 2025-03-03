@@ -21,6 +21,7 @@ module register(
     reg signed[63:0] read_data_1_reg;
     reg signed [63:0] read_data_2_reg;
     reg signed [63:0] read_data_rd_reg;
+    reg [5:0] rd_copy;
 
     always @ (rs1 or rs2 or rd) begin
         read_data_1_reg = register[rs1];
@@ -30,18 +31,19 @@ module register(
 
     //here only at positive edge of clk we write the data
     always @ (posedge clk) begin
-        $display("RegWrite: %d", RegWrite);
+        //$display("RegWrite: %d", RegWrite);
+        //rd_copy = rd;
         if(RegWrite)
         begin 
-            if (rd == 0) begin
-                $display("\n --> Register 0 cannot be updated");
-            end
-            else begin
+            // if (rd_copy == 0) begin
+            //     $display("\n --> Register 0 cannot be updated");
+            // end
+            // else begin
             register[rd] = wrt_data;
             read_data_rd_reg = register[rd];
             $display("\n --> Register %d updated to %d", rd, wrt_data);
             $writememh("Registerlog.mem", register);  // Save updated registers to file
-            end
+            //end
         end  
     end  
 

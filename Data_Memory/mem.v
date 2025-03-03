@@ -19,7 +19,7 @@ module mem(
     
     always @ (posedge clk) begin
         mem_reg = MemWrite;
-        $display("\n --> Memwrite %d read",mem_reg);
+        //$display("\n --> Memwrite %d read",mem_reg);
         if(mem_reg) begin
         memory[address] = data_in;
         address_out = memory[address];

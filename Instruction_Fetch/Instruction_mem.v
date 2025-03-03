@@ -50,7 +50,7 @@ module insmem(
         case (ctrl_reg)
             7'b0110011: begin // R-format 
                 $display("\n --> insmem: R-format with opcode 0110011");
-                $display("adding rs1=%d to rs2=%d into rd=%d", rs1,rs2, rd);
+                //$display("adding rs1=%d to rs2=%d into rd=%d", rs1,rs2, rd);
             end
             7'b0010011: begin // I-format (for immediate add)
                 $display("\n --> insmem: I-format with opcode 0010011");

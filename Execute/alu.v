@@ -141,10 +141,10 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
 
     end
 
-    always@(ALU_output) 
-    begin
-        #1;
-        $display("\n --> ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
-    end
+    // always@(ALU_output) 
+    // begin
+    //     #1;
+    //     $display("\n --> ALU: rs1=%d %s rs2=%d output=%d\t", rs1, command, rs2, ALU_output);
+    // end
     
 endmodule
