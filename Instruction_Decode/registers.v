@@ -25,11 +25,11 @@ module register(
     always @ (rs1 or rs2 or rd) begin
         read_data_1_reg = register[rs1];
         read_data_2_reg = register[rs2];
-        read_data_rd_reg = register[rd];
+        // read_data_rd_reg = register[rd];
     end
 
-    //here only at negative edge of clk we write the data
-    always @ (negedge clk) begin
+    //here only at positive edge of clk we write the data
+    always @ (posedge clk) begin
         $display("RegWrite: %d", RegWrite);
         if(RegWrite)
         begin 
@@ -38,6 +38,7 @@ module register(
             end
             else begin
             register[rd] = wrt_data;
+            read_data_rd_reg = register[rd];
             $display("\n --> Register %d updated to %d", rd, wrt_data);
             $writememh("Registerlog.mem", register);  // Save updated registers to file
             end

@@ -22,6 +22,7 @@ module mem(
         $display("\n --> Memwrite %d read",mem_reg);
         if(mem_reg) begin
         memory[address] = data_in;
+        address_out = memory[address];
         $display("\n --> Memory %d updated to %d", address, data_in);
         $writememh("Memorylog.mem", memory);  // Save updated registers to file
     end
@@ -33,9 +34,9 @@ module mem(
     end
     end
 
-    always @ (address) begin
-        address_out = memory[address]; // To display memory storing value in GTKWave
-    end
+    // always @ (address) begin
+    //     address_out = memory[address]; // To display memory storing value in GTKWave
+    // end
 
     assign data_out = data_out_reg;
 
