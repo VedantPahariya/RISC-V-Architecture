@@ -51,7 +51,7 @@ endmodule
 
 
 module adder(
-    input [7:0] address,      // PC address
+    input signed[7:0] address,      // PC address
     input signed [63:0] immgen,      // Immediate value
     input branch,             // Branch control signal
     input zero_flag,               // Zero flag
@@ -76,7 +76,7 @@ module adder(
         $display("\n --> adder: immgen:%d imm_shifted:%d zero_flag:%d",immgen, imm_shifted,zero_flag);
     end
     
-    wire [7:0] branch_target_8;
+    wire signed[7:0] branch_target_8;
     // Add 64-bit address1 and shifted immediate value
     ADD_beq add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target_8));
 

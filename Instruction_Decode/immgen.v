@@ -1,6 +1,6 @@
 module imm_gen(
     input [31:0] instruction,
-    output [63:0] imm
+    output signed [63:0] imm
 );
 
     reg [6:0] opcode;

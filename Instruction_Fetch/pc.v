@@ -1,6 +1,6 @@
 module program_counter(
     input clk,
-    input [7:0] next_addr,
+    input signed [7:0] next_addr,
     output [7:0] curr_addr
 );
 
@@ -14,9 +14,10 @@ module program_counter(
     assign curr_addr = PC;
 
     always @(posedge clk) begin
-        PC <= next_addr;
+        if(next_addr >= 0) PC = next_addr;
+        else PC = 0;
         $display("----------------------------------------------------------");
-        $display("\n \nPC updated to %d", next_addr);
+        $display("\n \nPC updated to %d", PC);
     end
 
 endmodule
