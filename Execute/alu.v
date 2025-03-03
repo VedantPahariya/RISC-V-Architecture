@@ -11,7 +11,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     output zero,carry,overflow;
 
     // register outputs
-    reg [63:0] ALU_output;
+    reg signed[63:0] ALU_output;
     reg zero_output, carry_output, overflow_output;
 
     assign rd = ALU_output;
@@ -19,7 +19,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     assign carry = carry_output;
     assign overflow = overflow_output;
 
-    wire [63:0] add_out, sub_out, and_out, or_out, xor_out, sll_out, srl_out, sra_out, slt_out, sltu_out;
+    wire signed [63:0] add_out, sub_out, and_out, or_out, xor_out, sll_out, srl_out, sra_out, slt_out, sltu_out;
     wire add_zero, sub_zero, and_zero, or_zero,xor_zero;
     wire add_carry, sub_carry;
     wire add_overflow, sub_overflow;

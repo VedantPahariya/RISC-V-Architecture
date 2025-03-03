@@ -2,7 +2,7 @@
 
 module register(
     input clk,
-    input [63:0] wrt_data,
+    input signed [63:0] wrt_data,
     input [5:0] rs1,
     input [5:0] rs2,
     input [5:0] rd,
@@ -11,7 +11,7 @@ module register(
     output [63:0] read_data_2
 );
 
-    reg [63:0] register [0:31];
+    reg signed[63:0] register [0:31];
     
     initial begin
         $readmemh("Registerlog.mem", register); 

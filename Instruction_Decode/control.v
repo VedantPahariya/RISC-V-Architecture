@@ -40,7 +40,7 @@ module control(
                 MemRead_reg = 0;
                 MemWrite_reg = 0;
                 branch_reg = 0;
-                alu_op_reg = 2'b10;
+                alu_op_reg = 2'b00;
             end
             7'b0000011: begin // Load (ld)
                 alu_src_reg = 1;

@@ -52,7 +52,7 @@ endmodule
 
 module adder(
     input [7:0] address,      // PC address
-    input [63:0] immgen,      // Immediate value
+    input signed [63:0] immgen,      // Immediate value
     input branch,             // Branch control signal
     input zero_flag,               // Zero flag
     output [7:0] address_out // Output address
@@ -60,7 +60,7 @@ module adder(
 
     wire [7:0] pc_plus_4;       // Holds address + 4
   //  wire [63:0] branch_target_64;   // Holds address + shifted immediate
-    wire [63:0] imm_shifted;     // Shifted immediate value
+    wire signed [63:0] imm_shifted;     // Shifted immediate value
     wire PCsrc;           // AND of branch and zero
 
     // extending the 8 bit address to 64 bit address

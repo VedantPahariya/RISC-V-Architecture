@@ -17,7 +17,7 @@ module tb_seq_wrapper;
         #10 
         // initial delay at x value to avoid unpredictable behaviour at t=0
         clk = 0;
-        #100; // Run for 1000ns
+        #200; // Run for 1000ns
         $stop; // Stop the simulation
         
     end

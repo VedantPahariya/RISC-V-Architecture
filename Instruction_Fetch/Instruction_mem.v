@@ -54,23 +54,23 @@ module insmem(
             end
             7'b0010011: begin // I-format (for immediate add)
                 $display("\n --> insmem: I-format with opcode 0010011");
-                $display("adding rs1=%d with imm=%d in rd=%d \t \t x%d = x%d + %d", rs1, instruction[31:20], rd, rd, rs1, instruction[31:20]);
+                $display("adding rs1=%d with imm=%d in rd=%d \t \t x%d = x%d + %d", rs1, $signed(instruction[31:20]), rd, rd, rs1, $signed(instruction[31:20]));
             end
             7'b0000011: begin // Load (ld)
                 $display("\n --> insmem: Load with opcode 0000011");
-                $display("loading from 'address in rs1'=%d with offset imm= %d in rd=%d", rs1, instruction[31:20], rd);
+                $display("loading from 'address in rs1'=%d with offset imm= %d in rd=%d", rs1, $signed(instruction[31:20]), rd);
             end
             7'b0100011: begin // Store (sd)
                 $display("\n --> insmem: Store with opcode 0100011");
-                $display("storing to 'address in rs1'=%d with offset imm= %d from rs2=%d", rs1, {{52{instruction[31]}},instruction[31:25], instruction[11:7]}, rs2);
+                $display("storing to 'address in rs1'=%d with offset imm= %d from rs2=%d", rs1, $signed({{52{instruction[31]}},instruction[31:25], instruction[11:7]}), rs2);
             end
             7'b1100011: begin // Branch (beq)
                 $display("\n --> insmem: Branch with opcode 1100011");
-                $display("branching if rs1=%d is equal to rs2=%d to PC = %d + 2*imm= %d", rs1, rs2,address,{{52{instruction[31]}},instruction[31],instruction[7], instruction[30:25], instruction[11:8]});
+                $display("branching if rs1=%d is equal to rs2=%d to PC = %d + 2*imm= %d", rs1, rs2,address,$signed({{52{instruction[31]}},instruction[31],instruction[7], instruction[30:25], instruction[11:8]}));
             end
             default: begin
                 // Default case to handle undefined opcodes
-                $display("\n --> insmem: Undefined opcode");
+                $display("\n --> insmem: Undefined opcode: %b", ctrl_reg);
             end
         endcase
     end

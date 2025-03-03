@@ -4,7 +4,7 @@ module imm_gen(
 );
 
     reg [6:0] opcode;
-    reg [63:0] immediate;
+    reg signed [63:0] immediate;
 
     reg [100:0] command;
     always @(*) begin
