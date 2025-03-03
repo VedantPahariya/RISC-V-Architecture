@@ -14,6 +14,9 @@ module tb_seq_wrapper;
     // Initial block to run the simulation
     initial begin
         // Run the simulation for a specific time
+        $dumpfile("demo.vcd");
+        $dumpvars(0, uut);
+        
         #10 
         // initial delay at x value to avoid unpredictable behaviour at t=0
         clk = 0;

@@ -1,0 +1,213 @@
+[*]
+[*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
+[*] Mon Mar 03 16:56:01 2025
+[*]
+[dumpfile] "C:\Users\pahar\OneDrive - IIIT Hyderabad\24-25 spring\Intro to Processor Architecture\RISC-V-Architecture\demo.vcd"
+[dumpfile_mtime] "Mon Mar 03 16:44:36 2025"
+[dumpfile_size] 630694
+[savefile] "C:\Users\pahar\OneDrive - IIIT Hyderabad\24-25 spring\Intro to Processor Architecture\RISC-V-Architecture\Waveform.gtkw"
+[timestart] 0
+[size] 1536 793
+[pos] -1 -1
+*-14.000000 11790 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] tb_seq_wrapper.
+[treeopen] tb_seq_wrapper.uut.
+[sst_width] 197
+[signals_width] 212
+[sst_expanded] 1
+[sst_vpaned_height] 296
+@28
+tb_seq_wrapper.uut.pc_inst.clk
+@200
+-
+@24
+[color] 5
+tb_seq_wrapper.uut.pc_inst.PC[7:0]
+@200
+-
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.rs1[5:0]
+@200
+-
+-Value in rs1
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.read_data_1[63:0]
+@200
+-
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.rs2[5:0]
+@200
+-
+-Value in rs2
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.read_data_2[63:0]
+@200
+-
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.rd[5:0]
+@200
+-
+-Value in rd
+@420
+[color] 2
+tb_seq_wrapper.uut.reg_inst.read_data_rd[63:0]
+@200
+-
+@420
+[color] 6
+tb_seq_wrapper.uut.imm_inst.immediate[63:0]
+@200
+-
+@24
+[color] 6
+tb_seq_wrapper.uut.ALU_inst.ALU_output[63:0]
+@200
+-
+@24
+[color] 3
+tb_seq_wrapper.uut.mem_inst.address[63:0]
+@20000
+-
+@200
+-Data Memory Output
+@c00024
+[color] 3
+tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+@28
+[color] 3
+(0)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(1)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(2)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(3)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(4)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(5)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(6)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(7)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(8)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(9)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(10)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(11)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(12)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(13)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(14)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(15)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(16)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(17)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(18)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(19)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(20)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(21)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(22)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(23)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(24)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(25)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(26)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(27)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(28)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(29)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(30)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(31)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(32)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(33)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(34)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(35)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(36)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(37)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(38)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(39)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(40)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(41)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(42)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(43)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(44)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(45)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(46)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(47)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(48)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(49)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(50)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(51)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(52)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(53)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(54)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(55)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(56)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(57)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(58)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(59)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(60)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(61)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(62)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+[color] 3
+(63)tb_seq_wrapper.uut.mem_inst.address_out[63:0]
+@1401200
+-group_end
+[pattern_trace] 1
+[pattern_trace] 0
