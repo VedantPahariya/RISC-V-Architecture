@@ -151,7 +151,7 @@ def instruction_to_binary(instruction):
             imm = (1 << 12) + imm
         
         # Convert to 11-bit binary (shifted)
-        imm_bin = format(imm & 0x7FF, '012b')
+        imm_bin = format(imm & 0xFFF, '012b')
         #print(imm_bin)
         
         # Decompose B-type immediate: imm[11|9:4|3:0|10]
