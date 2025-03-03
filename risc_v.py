@@ -12,6 +12,21 @@
 # registers = {f"x{i}": format(i, "05b") for i in range(32)}  # x0 - x31 in binary
 
 def main():
+    
+    # Zero out the first 32 lines of Registerlog.mem
+    with open("Registerlog.mem", "w") as reg_file:
+        for _ in range(32):
+            reg_file.write("00000000\n")
+    
+    # Zero out the first 1024 lines of Memorylog.mem
+    with open("Memorylog.mem", "w") as mem_file:
+        for _ in range(1024):
+            mem_file.write("00000000\n")
+
+    # ...existing code...
+    with open("input.txt", "r") as f:
+        lines = [line.strip() for line in f.readlines() if line.strip()]
+
     # Read input file
     with open("input.txt", "r") as f:
         lines = [line.strip() for line in f.readlines() if line.strip()]
