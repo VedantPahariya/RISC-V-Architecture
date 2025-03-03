@@ -29,7 +29,11 @@ module register(
     always @ (negedge clk) begin
         $display("RegWrite: %d", RegWrite);
         if(RegWrite)
-        begin
+        begin 
+            if (rd == 0) begin
+                $display("\n --> Register 0 cannot be updated");
+                return;
+            end
             register[rd] = wrt_data;
             $display("\n --> Register %d updated to %d", rd, wrt_data);
             $writememh("Registerlog.mem", register);  // Save updated registers to file
