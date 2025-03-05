@@ -7,6 +7,9 @@ module EX_MEM (
     input [31:0] pc_branch_in, // Program Counter for branch
     input zero, // Zero flag for branch decision
 
+    //for fwd unit
+    input [4:0] Rd,
+
     // Control Inputs
     input MemtoReg, // WB
     input regwrite, // WB
@@ -15,12 +18,15 @@ module EX_MEM (
 
     // Data Outputs
     output reg [31:0] pc_branch_out,
-    output reg [63:0] ALU_data_out, rd_data_out, rs_2_out,
+    output reg [63:0] ALU_data_out,rd_data_out, rs_2_out,
     output reg zero_out, 
 
     // Control Outputs
     output reg MemtoReg, regwrite,
     output reg branch, MemRead, MemWrite
+
+    //for fwd unit this output also goes to fwd unit and to MEM/WB register
+    output reg [4:0] EX_MEM_rd
 );
 
 always @(posedge clk or posedge rst) begin
@@ -35,6 +41,8 @@ always @(posedge clk or posedge rst) begin
         branch        <= branch;
         MemRead       <= MemRead;
         MemWrite      <= MemWrite;
+        EX_MEM_rd     <= Rd;
+        
     end
 
 endmodule

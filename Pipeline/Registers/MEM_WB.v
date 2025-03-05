@@ -10,10 +10,17 @@ module MEM_WB (
     output reg MemtoReg_out, // WB
     output reg regwrite_out, // WB
 
+ // for fwd unit
+    input [4:0] EX_MEM_rd,
+
+
     // Data Outputs
     output reg [63:0] rd_data_out, // WB
     output reg [63:0] ALU_data_out, // WB
     output reg [63:0] address_out1_out // WB
+
+    //for fwd unit
+    output reg [4:0] MEM_WB_rd
 );
 
 always @(posedge clk or posedge rst) begin
@@ -21,9 +28,9 @@ always @(posedge clk or posedge rst) begin
         rd_data_out      <= rd_data;
         ALU_data_out     <= ALU_data;
         address_out1_out <= address_out1;
-
         MemtoReg_out     <= MemtoReg;
         regwrite_out     <= regwrite;
+        MEM_WB_rd        <= EX_MEM_rd;
 end
 
 endmodule
