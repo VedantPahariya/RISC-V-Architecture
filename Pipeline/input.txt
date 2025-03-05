@@ -1,0 +1,15 @@
+addi x1, x0, 2 
+addi x2, x0, 1    
+addi x3, x0, 3      
+sd x1, 0(x5)         
+sd x2, 8(x5)                   
+ld x4, 0(x5)        
+ld x6, 8(x5)      
+add x7, x4, x6    
+sub x8, x4, x6     
+and x9, x4, x6      
+xor x10, x4, x6      
+addi x3, x3, -1    
+beq x3, x0, 4          
+beq x0, x0, -8     
+addi x11, x0, 1
