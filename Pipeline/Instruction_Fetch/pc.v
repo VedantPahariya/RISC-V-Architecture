@@ -4,7 +4,7 @@ module program_counter(
     output [7:0] curr_addr
 );
 
-    reg [7:0] PC;
+    reg signed [7:0] PC;
 
     initial begin
         PC = 8'b11111100; //trying PC equals -4
