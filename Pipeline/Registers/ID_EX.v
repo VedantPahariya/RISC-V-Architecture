@@ -1,6 +1,5 @@
 module ID_EX (
-    input clk,  
-    input rst, // Reset signal
+    input clk,
     input [63:0] rs1_data, rs2_data, rd_data, // Data from registers
     input [63:0] imm_gen, // Immediate value
     input [31:0] pc_in, // Program Counter
@@ -21,23 +20,7 @@ module ID_EX (
     output reg [31:0] instruction_out
 );
 
-always @(posedge clk or posedge rst) begin
-    if (rst) begin
-        rs1_data_out <= 0;
-        rs2_data_out <= 0;
-        rd_data_out  <= 0;
-        imm_out      <= 0;
-        pc_out       <= 0;
-        MemtoReg     <= 0;
-        regwrite     <= 0;
-        branch       <= 0;
-        MemRead      <= 0;
-        MemWrite     <= 0;
-        alu_src      <= 0;
-        alu_op       <= 0;
-        instruction_out <= 0;
-    end 
-    else begin
+always @(posedge clk) begin
         rs1_data_out <= rs1_data;
         rs2_data_out <= rs2_data;
         rd_data_out  <= rd_data;
@@ -51,7 +34,6 @@ always @(posedge clk or posedge rst) begin
         alu_src      <= alu_src;
         alu_op       <= alu_op;
         instruction_out <= instruction;
-    end
 end
 
 endmodule
