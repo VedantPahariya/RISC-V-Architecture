@@ -9,7 +9,7 @@ output reg [1:0] fwd_A,
 output reg [1:0] fwd_B
 );
 
-        always @* begin
+        always @(*) begin
         if (EX_MEM_regWrite && (EX_MEM_rd != 0) && (EX_MEM_rd ==ID_EX_rs1))
             fwd_A = 10;
         else  
