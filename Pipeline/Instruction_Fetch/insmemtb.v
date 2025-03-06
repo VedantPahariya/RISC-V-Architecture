@@ -2,7 +2,7 @@
 `include "pc.v"
 `include "pc_increment.v"
 `include "../Registers/IF_ID.v"
-`timescale 1ns / 1ps
+`timescale 1ns / 1ns
 
 module tb_instruction_fetch;
     // Inputs
@@ -73,8 +73,8 @@ module tb_instruction_fetch;
         branch_target = 8'd0; // Default branch target
         
         // Create a VCD file for waveform viewing
-        // $dumpfile("instruction_fetch.vcd");
-        // $dumpvars(0, tb_instruction_fetch);
+        $dumpfile("instruction_fetch.vcd");
+        $dumpvars(0, tb_instruction_fetch);
         
         // Display header for simulation output
         $display("Time\tPC\tInstruction\tNext PC");

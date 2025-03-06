@@ -11,13 +11,20 @@ module program_counter(
         $display("PC updated to %d", PC);
     end
 
-    assign curr_addr = PC;
-
     always @(posedge clk) begin
-        if(next_addr >= 0) PC = next_addr;
-        else PC = 0;
+        if(next_addr >= 0) 
+            PC <= next_addr;
+        else 
+            PC = 0;
         $display("----------------------------------------------------------");
         $display("\n \nPC updated to %d", PC);
     end
+
+    // always @(PC) begin
+    //     $display("----------------------------------------------------------");
+    //     $display("\n \nPC updated to %d", PC);
+    // end
+
+    assign curr_addr = PC;
 
 endmodule
