@@ -1,3 +1,4 @@
+`timescale 1ns / 1ns
 `include "../Registers/IF_ID.v"
 `include "../Registers/ID_EX.v"
 `include "../Instruction_Fetch/Instruction_mem.v"
@@ -6,7 +7,6 @@
 `include "control.v"
 `include "registers.v"
 `include "immgen.v"
-`timescale 1ns / 1ns
 
 module tb_instruction_decode;
     // Inputs
@@ -28,13 +28,20 @@ module tb_instruction_decode;
     wire [31:0] instruction_out;
     wire [7:0] pc_out;
 
-    // ID/EX Register outputs
-    wire signed [63:0] rs1_data_out, rs2_data_out, imm_out;
+    // ID/EX Register input wires
+    wire signed [63:0] rs1_data_out, rs2_data_out, rd_data_out, imm_out;
+    
+    // ID/EX Register output wires
     wire [7:0] pc_out_id_ex;
-    wire MemtoReg, regwrite, branch_out, MemRead, MemWrite, alu_src;
-    wire [1:0] alu_op;
     wire [31:0] instruction_out_id_ex;
     wire [4:0] rs1_id_ex, rs2_id_ex, rd_id_ex;
+    wire MemtoReg, regwrite, branch_out, MemRead, MemWrite, alu_src;
+    wire [1:0] alu_op;
+    
+    // New wires for monitoring ID/EX outputs
+    wire signed [63:0] rs1_data_id_ex, rs2_data_id_ex, rd_data_id_ex, imm_id_ex;
+    wire MemtoReg_id_ex, regwrite_id_ex, branch_id_ex, MemRead_id_ex, MemWrite_id_ex, alu_src_id_ex;
+    wire [1:0] alu_op_id_ex;
 
     // Instantiate Program Counter
     program_counter pc_inst (
@@ -93,7 +100,7 @@ module tb_instruction_decode;
         .RegWrite(regwrite),
         .read_data_1(rs1_data_out),
         .read_data_2(rs2_data_out),
-        .read_data_rd() // Not used in this test bench
+        .read_data_rd(rd_data_out)
     );
 
     // Instantiate Immediate Generator
@@ -107,7 +114,7 @@ module tb_instruction_decode;
         .clk(clk),
         .rs1_data(rs1_data_out),
         .rs2_data(rs2_data_out),
-        .rd_data(64'd0),  // Placeholder for actual register data
+        .rd_data(rd_data_out),
         .imm_gen(imm_out),
         .pc_in(pc_out),
         .MemtoReg(MemtoReg),
@@ -122,17 +129,17 @@ module tb_instruction_decode;
         .IF_ID_rs2(rs2),
         .IF_ID_rd(rd),
         .pc_out(pc_out_id_ex),
-        .rs1_data_out(rs1_data_out),
-        .rs2_data_out(rs2_data_out),
-        .rd_data_out(), // Not used in this test bench
-        .imm_out(imm_out),
-        .MemtoReg(MemtoReg),
-        .regwrite(regwrite),
-        .branch(branch_out),
-        .MemRead(MemRead),
-        .MemWrite(MemWrite),
-        .alu_src(alu_src),
-        .alu_op(alu_op),
+        .rs1_data_out(rs1_data_id_ex),  // Now monitored
+        .rs2_data_out(rs2_data_id_ex),  // Now monitored
+        .rd_data_out(rd_data_id_ex),    // Now monitored
+        .imm_out(imm_id_ex),            // Now monitored
+        .MemtoReg_out(MemtoReg_id_ex),      // Now monitored
+        .regwrite_out(regwrite_id_ex),      // Now monitored
+        .branch_out(branch_id_ex),          // Now monitored
+        .MemRead_out(MemRead_id_ex),        // Now monitored
+        .MemWrite_out(MemWrite_id_ex),      // Now monitored
+        .alu_src_out(alu_src_id_ex),        // Now monitored
+        .alu_op_out(alu_op_id_ex),          // Now monitored
         .instruction_out(instruction_out_id_ex),
         .rs1(rs1_id_ex),
         .rs2(rs2_id_ex),
@@ -143,6 +150,12 @@ module tb_instruction_decode;
     initial begin
         clk = 0;
         forever #5 clk = ~clk; // 10ns clock period
+    end
+    
+    // Monitor values using negedge to ensure values are stable
+    always @(negedge clk) begin
+        $display("%0t\tPC=%d\tInstruction=0x%h\tNext PC=%d", 
+                 $time, pc, instruction, next_pc);
     end
     
     // Test stimulus
@@ -161,23 +174,24 @@ module tb_instruction_decode;
         $display("-----------------------------------------");
         
         // Run for multiple clock cycles to fetch several instructions
-        #100; // Run for 100ns (10 clock cycles)
+        #200; // Run for 200ns (20 clock cycles)
         
+        // Display final state information
         $display("\nIF/ID Register Final State:");
         $display("PC_out: %d, Instruction: %h", pc_out, instruction_out);
         $display("Control: %b, rd: %d, rs1: %d, rs2: %d", ctrl, rd, rs1, rs2);
         
         $display("\nID/EX Register Final State:");
         $display("PC_out: %d, Instruction: %h", pc_out_id_ex, instruction_out_id_ex);
-        $display("Control: %b, rd: %d, rs1: %d, rs2: %d", MemtoReg, rd_id_ex, rs1_id_ex, rs2_id_ex);
+        $display("rs1_data: %d, rs2_data: %d, rd_data: %d", rs1_data_id_ex, rs2_data_id_ex, rd_data_id_ex);
+        $display("imm_value: %d", imm_id_ex);
+        $display("Control signals:");
+        $display("MemtoReg: %b, RegWrite: %b, Branch: %b", MemtoReg_id_ex, regwrite_id_ex, branch_id_ex);
+        $display("MemRead: %b, MemWrite: %b, ALU_Src: %b, ALU_Op: %b", 
+                 MemRead_id_ex, MemWrite_id_ex, alu_src_id_ex, alu_op_id_ex);
+        $display("rd: %d, rs1: %d, rs2: %d", rd_id_ex, rs1_id_ex, rs2_id_ex);
         
         $finish;
-    end
-    
-    // Monitor PC and instruction values
-    always @(posedge clk) begin
-        #1; // Small delay to let signals settle
-        $display("%0t\t%d\t0x%h\t%d", $time, pc, instruction, next_pc);
     end
 
     // Test case validation

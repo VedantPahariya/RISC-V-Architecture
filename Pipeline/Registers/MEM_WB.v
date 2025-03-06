@@ -2,7 +2,6 @@
 
 module MEM_WB (
     input clk,
-    
 
     // MEM stage outputs
     input [63:0] ALU_data,read_Data, // Data to be written to register
