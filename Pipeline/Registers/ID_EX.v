@@ -17,10 +17,10 @@ module ID_EX (
 
     output reg [7:0] pc_out,
     output reg [63:0] rs1_data_out, rs2_data_out, rd_data_out, imm_out,
-    output reg MemtoReg, regwrite,
-    output reg branch, MemRead, MemWrite,
-    output reg alu_src,
-    output reg [1:0] alu_op,
+    output reg MemtoReg_out, regwrite_out,
+    output reg branch_out, MemRead_out, MemWrite_out,
+    output reg alu_src_out,
+    output reg [1:0] alu_op_out,
     output reg [31:0] instruction_out,
     //sending to forwarding unit
     output reg [4:0] rs1,
@@ -28,26 +28,24 @@ module ID_EX (
     output reg [4:0] rd
 );
 
-
-
+// Non-blocking assignments are used to update all outputs on the positive edge of the clock
 always @(posedge clk) begin
-        rs1_data_out <= rs1_data;
-        rs2_data_out <= rs2_data;
-        rd_data_out  <= rd_data;
-        imm_out      <= imm_gen;
-        pc_out       <= pc_in;
-        MemtoReg     <= MemtoReg;
-        regwrite     <= regwrite;
-        branch       <= branch;
-        MemRead      <= MemRead;
-        MemWrite     <= MemWrite;
-        alu_src      <= alu_src;
-        alu_op       <= alu_op;
-        instruction_out <= instruction;
-        rs1 <= IF_ID_rs1;
-        rs2 <= IF_ID_rs2;
-        rd  <= IF_ID_rd;
+    rs1_data_out <= rs1_data;
+    rs2_data_out <= rs2_data;
+    rd_data_out  <= rd_data;
+    imm_out      <= imm_gen;
+    pc_out       <= pc_in;
+    MemtoReg_out <= MemtoReg;
+    regwrite_out <= regwrite;
+    branch_out   <= branch;
+    MemRead_out  <= MemRead;
+    MemWrite_out <= MemWrite;
+    alu_src_out  <= alu_src;
+    alu_op_out   <= alu_op;
+    instruction_out <= instruction;
+    rs1 <= IF_ID_rs1;
+    rs2 <= IF_ID_rs2;
+    rd  <= IF_ID_rd;
 end
-
 
 endmodule
