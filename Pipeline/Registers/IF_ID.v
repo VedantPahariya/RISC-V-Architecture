@@ -38,6 +38,8 @@ module IF_ID(
     //     rs2_reg <= instruction_out[24:20];   // rs2 field
     // end
 
+// instruction_out because once the clock hits, it will update the ctrl_reg based on the instruction_out so the values 
+// printing with old value of ctrl_reg
     always @(instruction_out) begin 
         case (ctrl_reg)
             7'b0110011: begin // R-format 
@@ -63,6 +65,37 @@ module IF_ID(
             default: begin
                 // Default case to handle undefined opcodes
                 $display("\n --> Ins Fetch: Undefined opcode: %b", ctrl_reg);
+            end
+        endcase
+    end
+
+// posedge clk because once the clock hits, this ctrl reg is still 
+// printing the new value of ctrl_reg
+    always @(posedge clk) begin 
+        case (ctrl_reg)
+            7'b0110011: begin // R-format 
+                $display("\n --> Ins Decode: R-format with opcode 0110011");
+                //$display("adding rs1=%d to rs2=%d into rd=%d", rs1,rs2, rd);
+            end
+            7'b0010011: begin // I-format (for immediate add)
+                $display("\n --> Ins Decode: I-format with opcode 0010011");
+                $display("adding rs1=%d with imm=%d in rd=%d \t \t x%d = x%d + %d", rs1, $signed(instruction_out[31:20]), rd, rd, rs1, $signed(instruction_out[31:20]));
+            end
+            7'b0000011: begin // Load (ld)
+                $display("\n --> Ins Decode: Load with opcode 0000011");
+                $display("loading from 'address in rs1'=%d with offset imm= %d in rd=%d", rs1, $signed(instruction_out[31:20]), rd);
+            end
+            7'b0100011: begin // Store (sd)
+                $display("\n --> Ins Decode: Store with opcode 0100011");
+                $display("storing to 'address in rs1'=%d with offset imm= %d from rs2=%d", rs1, $signed({{52{instruction_out[31]}},instruction_out[31:25], instruction_out[11:7]}), rs2);
+            end
+            7'b1100011: begin // Branch (beq)
+                $display("\n --> Ins Decode: Branch with opcode 1100011");
+                $display("branching if rs1=%d is equal to rs2=%d to PC = %d + 2*imm= %d", rs1, rs2,pc_out,$signed({{52{instruction_out[31]}},instruction_out[31],instruction_out[7], instruction_out[30:25], instruction_out[11:8]}));
+            end
+            default: begin
+                // Default case to handle undefined opcodes
+                $display("\n --> Ins Decode: Undefined opcode: %b", ctrl_reg);
             end
         endcase
     end

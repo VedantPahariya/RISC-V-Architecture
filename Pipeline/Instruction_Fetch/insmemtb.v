@@ -1,8 +1,8 @@
+`timescale 1ns/1ns
 `include "Instruction_mem.v"
 `include "pc.v"
 `include "pc_increment.v"
 `include "../Registers/IF_ID.v"
-`timescale 1ns / 1ns
 
 module tb_instruction_fetch;
     // Inputs
@@ -91,10 +91,10 @@ module tb_instruction_fetch;
     end
     
     // Monitor PC and instruction values
-    always @(posedge clk) begin
-        #1; // Small delay to let signals settle
-        $display("%0t\t%d\t0x%h\t%d", $time, pc, instruction, next_pc);
-    end
+    // always @(posedge clk) begin
+    //     #1; // Small delay to let signals settle
+    //     $display("%0t\t%d\t0x%h\t%d", $time, pc, instruction, next_pc);
+    // end
 
     // Test case validation
     initial begin

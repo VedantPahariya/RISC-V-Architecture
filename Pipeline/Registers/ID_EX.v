@@ -28,7 +28,6 @@ module ID_EX (
     output reg [4:0] rd
 );
 
-// Non-blocking assignments are used to update all outputs on the positive edge of the clock
 always @(posedge clk) begin
     rs1_data_out <= rs1_data;
     rs2_data_out <= rs2_data;

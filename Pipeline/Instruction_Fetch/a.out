@@ -1,0 +1,616 @@
+#! /c/Source/iverilog-install/bin/vvp
+:ivl_version "12.0 (devel)" "(s20150603-1539-g2693dd32b)";
+:ivl_delay_selection "TYPICAL";
+:vpi_time_precision - 9;
+:vpi_module "C:\iverilog\lib\ivl\system.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_sys.vpi";
+:vpi_module "C:\iverilog\lib\ivl\vhdl_textio.vpi";
+:vpi_module "C:\iverilog\lib\ivl\v2005_math.vpi";
+:vpi_module "C:\iverilog\lib\ivl\va_math.vpi";
+S_000002295849fa40 .scope module, "tb_instruction_fetch" "tb_instruction_fetch" 2 7;
+ .timescale -9 -9;
+v00000229585023b0_0 .var "branch", 0 0;
+v0000022958501af0_0 .var "branch_target", 7 0;
+v0000022958500d30_0 .var "clk", 0 0;
+v0000022958502090_0 .net "ctrl", 6 0, L_00000229585d8240;  1 drivers
+v0000022958501cd0_0 .net "instruction", 31 0, L_0000022958500f10;  1 drivers
+v0000022958501190_0 .net "instruction_out", 31 0, v0000022958485250_0;  1 drivers
+v0000022958501410_0 .net "next_pc", 7 0, L_00000229584952c0;  1 drivers
+v0000022958501730_0 .net "pc", 7 0, v0000022958501c30_0;  1 drivers
+v00000229585014b0_0 .net "pc_out", 7 0, v00000229584fc8e0_0;  1 drivers
+v0000022958500b50_0 .net "rd", 4 0, L_00000229585d82b0;  1 drivers
+v0000022958500dd0_0 .net "rs1", 4 0, L_00000229585d8c50;  1 drivers
+v0000022958500970_0 .net "rs2", 4 0, L_00000229585d8cc0;  1 drivers
+v0000022958500bf0_0 .var "zero_flag", 0 0;
+S_0000022958496c10 .scope module, "if_id_reg" "IF_ID" 2 50, 3 2 0, S_000002295849fa40;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 32 "instruction_in";
+    .port_info 2 /INPUT 8 "pc_in";
+    .port_info 3 /OUTPUT 7 "ctrl";
+    .port_info 4 /OUTPUT 5 "rs1";
+    .port_info 5 /OUTPUT 5 "rs2";
+    .port_info 6 /OUTPUT 5 "rd";
+    .port_info 7 /OUTPUT 32 "instruction_out";
+    .port_info 8 /OUTPUT 8 "pc_out";
+L_00000229585d8240 .functor BUFZ 7, v0000022958484c10_0, C4<0000000>, C4<0000000>, C4<0000000>;
+L_00000229585d82b0 .functor BUFZ 5, v00000229584fd100_0, C4<00000>, C4<00000>, C4<00000>;
+L_00000229585d8c50 .functor BUFZ 5, v00000229584fd560_0, C4<00000>, C4<00000>, C4<00000>;
+L_00000229585d8cc0 .functor BUFZ 5, v00000229584fd740_0, C4<00000>, C4<00000>, C4<00000>;
+v000002295848a1d0_0 .net "clk", 0 0, v0000022958500d30_0;  1 drivers
+v00000229584848f0_0 .net "ctrl", 6 0, L_00000229585d8240;  alias, 1 drivers
+v0000022958484c10_0 .var "ctrl_reg", 6 0;
+v0000022958485110_0 .net "instruction_in", 31 0, L_0000022958500f10;  alias, 1 drivers
+v0000022958485250_0 .var "instruction_out", 31 0;
+v00000229584fbb20_0 .net "pc_in", 7 0, v0000022958501c30_0;  alias, 1 drivers
+v00000229584fc8e0_0 .var "pc_out", 7 0;
+v00000229584fd060_0 .net "rd", 4 0, L_00000229585d82b0;  alias, 1 drivers
+v00000229584fd100_0 .var "rd_reg", 4 0;
+v00000229584fd4c0_0 .net "rs1", 4 0, L_00000229585d8c50;  alias, 1 drivers
+v00000229584fd560_0 .var "rs1_reg", 4 0;
+v00000229584fb940_0 .net "rs2", 4 0, L_00000229585d8cc0;  alias, 1 drivers
+v00000229584fd740_0 .var "rs2_reg", 4 0;
+E_0000022958497f50 .event posedge, v000002295848a1d0_0;
+E_0000022958497810 .event anyedge, v0000022958484c10_0, v0000022958485250_0;
+S_0000022958495c90 .scope module, "inst_mem" "insmem" 2 35, 4 3 0, S_000002295849fa40;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 8 "curr_addr";
+    .port_info 1 /OUTPUT 32 "instruction";
+v00000229584fd1a0_0 .net *"_ivl_0", 7 0, L_00000229585015f0;  1 drivers
+v00000229584fc200_0 .net *"_ivl_10", 7 0, L_0000022958500c90;  1 drivers
+v00000229584fd380_0 .net *"_ivl_12", 31 0, L_00000229585021d0;  1 drivers
+L_0000022958580118 .functor BUFT 1, C4<000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000229584fcfc0_0 .net *"_ivl_15", 23 0, L_0000022958580118;  1 drivers
+L_0000022958580160 .functor BUFT 1, C4<00000000000000000000000000000010>, C4<0>, C4<0>, C4<0>;
+v00000229584fc660_0 .net/2u *"_ivl_16", 31 0, L_0000022958580160;  1 drivers
+v00000229584fc700_0 .net *"_ivl_18", 31 0, L_0000022958502630;  1 drivers
+v00000229584fd600_0 .net *"_ivl_2", 31 0, L_0000022958502130;  1 drivers
+v00000229584fcd40_0 .net *"_ivl_20", 7 0, L_0000022958501550;  1 drivers
+v00000229584fd6a0_0 .net *"_ivl_22", 31 0, L_0000022958502770;  1 drivers
+L_00000229585801a8 .functor BUFT 1, C4<000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000229584fb8a0_0 .net *"_ivl_25", 23 0, L_00000229585801a8;  1 drivers
+L_00000229585801f0 .functor BUFT 1, C4<00000000000000000000000000000001>, C4<0>, C4<0>, C4<0>;
+v00000229584fc0c0_0 .net/2u *"_ivl_26", 31 0, L_00000229585801f0;  1 drivers
+v00000229584fc7a0_0 .net *"_ivl_28", 31 0, L_0000022958502270;  1 drivers
+v00000229584fbee0_0 .net *"_ivl_30", 7 0, L_0000022958502590;  1 drivers
+v00000229584fc2a0_0 .net *"_ivl_32", 9 0, L_0000022958500e70;  1 drivers
+L_0000022958580238 .functor BUFT 1, C4<00>, C4<0>, C4<0>, C4<0>;
+v00000229584fd420_0 .net *"_ivl_35", 1 0, L_0000022958580238;  1 drivers
+L_0000022958580088 .functor BUFT 1, C4<000000000000000000000000>, C4<0>, C4<0>, C4<0>;
+v00000229584fce80_0 .net *"_ivl_5", 23 0, L_0000022958580088;  1 drivers
+L_00000229585800d0 .functor BUFT 1, C4<00000000000000000000000000000011>, C4<0>, C4<0>, C4<0>;
+v00000229584fc480_0 .net/2u *"_ivl_6", 31 0, L_00000229585800d0;  1 drivers
+v00000229584fc980_0 .net *"_ivl_8", 31 0, L_00000229585012d0;  1 drivers
+v00000229584fb9e0_0 .net "curr_addr", 7 0, v0000022958501c30_0;  alias, 1 drivers
+v00000229584fc340_0 .net "instruction", 31 0, L_0000022958500f10;  alias, 1 drivers
+v00000229584fbda0 .array "memory", 255 0, 7 0;
+L_00000229585015f0 .array/port v00000229584fbda0, L_00000229585012d0;
+L_0000022958502130 .concat [ 8 24 0 0], v0000022958501c30_0, L_0000022958580088;
+L_00000229585012d0 .arith/sum 32, L_0000022958502130, L_00000229585800d0;
+L_0000022958500c90 .array/port v00000229584fbda0, L_0000022958502630;
+L_00000229585021d0 .concat [ 8 24 0 0], v0000022958501c30_0, L_0000022958580118;
+L_0000022958502630 .arith/sum 32, L_00000229585021d0, L_0000022958580160;
+L_0000022958501550 .array/port v00000229584fbda0, L_0000022958502270;
+L_0000022958502770 .concat [ 8 24 0 0], v0000022958501c30_0, L_00000229585801a8;
+L_0000022958502270 .arith/sum 32, L_0000022958502770, L_00000229585801f0;
+L_0000022958502590 .array/port v00000229584fbda0, L_0000022958500e70;
+L_0000022958500e70 .concat [ 8 2 0 0], v0000022958501c30_0, L_0000022958580238;
+L_0000022958500f10 .concat [ 8 8 8 8], L_0000022958502590, L_0000022958501550, L_0000022958500c90, L_00000229585015f0;
+S_00000229584a08e0 .scope module, "pc_adder" "pc_increment" 2 41, 5 35 0, S_000002295849fa40;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 8 "curr_addr";
+    .port_info 1 /INPUT 8 "branch_target";
+    .port_info 2 /INPUT 1 "branch";
+    .port_info 3 /INPUT 1 "zero_flag";
+    .port_info 4 /OUTPUT 8 "address_out";
+L_00000229585d8320 .functor AND 1, v00000229585023b0_0, v0000022958500bf0_0, C4<1>, C4<1>;
+v00000229584ff610_0 .net "PCsrc", 0 0, L_00000229585d8320;  1 drivers
+v00000229584ff6b0_0 .net "address_out", 7 0, L_00000229584952c0;  alias, 1 drivers
+v00000229585026d0_0 .net "branch", 0 0, v00000229585023b0_0;  1 drivers
+v0000022958501f50_0 .net/s "branch_target", 7 0, v0000022958501af0_0;  1 drivers
+v00000229585017d0_0 .net/s "curr_addr", 7 0, v0000022958501c30_0;  alias, 1 drivers
+v0000022958501eb0_0 .net "pc_plus_4", 7 0, L_0000022958495220;  1 drivers
+v0000022958500a10_0 .net "zero_flag", 0 0, v0000022958500bf0_0;  1 drivers
+L_00000229584952c0 .functor MUXZ 8, L_0000022958495220, v0000022958501af0_0, L_00000229585d8320, C4<>;
+S_0000022958455dc0 .scope module, "add_inst" "ADD4" 5 47, 5 15 0, S_00000229584a08e0;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 8 "rs1";
+    .port_info 1 /OUTPUT 8 "rd";
+L_00000229585802c8 .functor BUFT 1, C4<0>, C4<0>, C4<0>, C4<0>;
+v00000229584fe990_0 .net/2u *"_ivl_62", 0 0, L_00000229585802c8;  1 drivers
+v00000229584fead0_0 .net "carry", 8 0, L_0000022958494780;  1 drivers
+v00000229584ff4d0_0 .net/s "rd", 7 0, L_0000022958495220;  alias, 1 drivers
+v00000229584feb70_0 .net/s "rs1", 7 0, v0000022958501c30_0;  alias, 1 drivers
+L_0000022958580280 .functor BUFT 1, C4<00000100>, C4<0>, C4<0>, C4<0>;
+v00000229584ff570_0 .net "rs2", 7 0, L_0000022958580280;  1 drivers
+L_0000022958501a50 .part v0000022958501c30_0, 0, 1;
+L_00000229585019b0 .part L_0000022958580280, 0, 1;
+L_0000022958501d70 .part L_0000022958494780, 0, 1;
+L_0000022958502310 .part v0000022958501c30_0, 1, 1;
+L_0000022958501b90 .part L_0000022958580280, 1, 1;
+L_0000022958502450 .part L_0000022958494780, 1, 1;
+L_00000229585024f0 .part v0000022958501c30_0, 2, 1;
+L_0000022958501690 .part L_0000022958580280, 2, 1;
+L_00000229585008d0 .part L_0000022958494780, 2, 1;
+L_0000022958501870 .part v0000022958501c30_0, 3, 1;
+L_0000022958500fb0 .part L_0000022958580280, 3, 1;
+L_0000022958501e10 .part L_0000022958494780, 3, 1;
+L_0000022958501050 .part v0000022958501c30_0, 4, 1;
+L_00000229585010f0 .part L_0000022958580280, 4, 1;
+L_0000022958501370 .part L_0000022958494780, 4, 1;
+L_0000022958501910 .part v0000022958501c30_0, 5, 1;
+L_0000022958494c80 .part L_0000022958580280, 5, 1;
+L_00000229584955e0 .part L_0000022958494780, 5, 1;
+L_0000022958494be0 .part v0000022958501c30_0, 6, 1;
+L_0000022958494960 .part L_0000022958580280, 6, 1;
+L_0000022958495540 .part L_0000022958494780, 6, 1;
+L_0000022958494aa0 .part v0000022958501c30_0, 7, 1;
+L_0000022958494820 .part L_0000022958580280, 7, 1;
+L_0000022958494d20 .part L_0000022958494780, 7, 1;
+LS_0000022958495220_0_0 .concat8 [ 1 1 1 1], L_000002295848e9d0, L_000002295848eab0, L_00000229585d8e80, L_00000229585d8f60;
+LS_0000022958495220_0_4 .concat8 [ 1 1 1 1], L_00000229585d8470, L_00000229585d8d30, L_00000229585d80f0, L_00000229585d8fd0;
+L_0000022958495220 .concat8 [ 4 4 0 0], LS_0000022958495220_0_0, LS_0000022958495220_0_4;
+LS_0000022958494780_0_0 .concat8 [ 1 1 1 1], L_00000229585802c8, L_000002295848ec00, L_000002295847d020, L_00000229585d87f0;
+LS_0000022958494780_0_4 .concat8 [ 1 1 1 1], L_00000229585d8be0, L_00000229585d88d0, L_00000229585d8ef0, L_00000229585d8b00;
+LS_0000022958494780_0_8 .concat8 [ 1 0 0 0], L_00000229585d8a20;
+L_0000022958494780 .concat8 [ 4 4 1 0], LS_0000022958494780_0_0, LS_0000022958494780_0_4, LS_0000022958494780_0_8;
+S_0000022958455f50 .scope generate, "genblk1[0]" "genblk1[0]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958497f90 .param/l "i" 0 5 28, +C4<00>;
+S_000002295845d460 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_0000022958455f50;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_000002295848e9d0 .functor XOR 1, L_0000022958501a50, L_00000229585019b0, L_0000022958501d70, C4<0>;
+L_000002295848eb90 .functor AND 1, L_0000022958501a50, L_00000229585019b0, C4<1>, C4<1>;
+L_000002295848ec70 .functor AND 1, L_00000229585019b0, L_0000022958501d70, C4<1>, C4<1>;
+L_000002295848e6c0 .functor AND 1, L_0000022958501d70, L_0000022958501a50, C4<1>, C4<1>;
+L_000002295848ec00 .functor OR 1, L_000002295848eb90, L_000002295848ec70, L_000002295848e6c0, C4<0>;
+v00000229584fbe40_0 .net/s "a", 0 0, L_0000022958501a50;  1 drivers
+v00000229584fba80_0 .net/s "b", 0 0, L_00000229585019b0;  1 drivers
+v00000229584fbf80_0 .net/s "c", 0 0, L_0000022958501d70;  1 drivers
+v00000229584fcde0_0 .net/s "carry", 0 0, L_000002295848ec00;  1 drivers
+v00000229584fc840_0 .net "d", 0 0, L_000002295848eb90;  1 drivers
+v00000229584fbbc0_0 .net "e", 0 0, L_000002295848ec70;  1 drivers
+v00000229584fd240_0 .net "f", 0 0, L_000002295848e6c0;  1 drivers
+v00000229584fc020_0 .net/s "sum", 0 0, L_000002295848e9d0;  1 drivers
+S_000002295845d5f0 .scope generate, "genblk1[1]" "genblk1[1]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958497850 .param/l "i" 0 5 28, +C4<01>;
+S_000002295857e700 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_000002295845d5f0;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_000002295848eab0 .functor XOR 1, L_0000022958502310, L_0000022958501b90, L_0000022958502450, C4<0>;
+L_000002295848e960 .functor AND 1, L_0000022958502310, L_0000022958501b90, C4<1>, C4<1>;
+L_000002295848e8f0 .functor AND 1, L_0000022958501b90, L_0000022958502450, C4<1>, C4<1>;
+L_000002295847d720 .functor AND 1, L_0000022958502450, L_0000022958502310, C4<1>, C4<1>;
+L_000002295847d020 .functor OR 1, L_000002295848e960, L_000002295848e8f0, L_000002295847d720, C4<0>;
+v00000229584fc160_0 .net/s "a", 0 0, L_0000022958502310;  1 drivers
+v00000229584fcca0_0 .net/s "b", 0 0, L_0000022958501b90;  1 drivers
+v00000229584fca20_0 .net/s "c", 0 0, L_0000022958502450;  1 drivers
+v00000229584fc3e0_0 .net/s "carry", 0 0, L_000002295847d020;  1 drivers
+v00000229584fbc60_0 .net "d", 0 0, L_000002295848e960;  1 drivers
+v00000229584fbd00_0 .net "e", 0 0, L_000002295848e8f0;  1 drivers
+v00000229584fc520_0 .net "f", 0 0, L_000002295847d720;  1 drivers
+v00000229584fcac0_0 .net/s "sum", 0 0, L_000002295848eab0;  1 drivers
+S_000002295857e890 .scope generate, "genblk1[2]" "genblk1[2]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958498190 .param/l "i" 0 5 28, +C4<010>;
+S_0000022958460600 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_000002295857e890;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d8e80 .functor XOR 1, L_00000229585024f0, L_0000022958501690, L_00000229585008d0, C4<0>;
+L_00000229585d86a0 .functor AND 1, L_00000229585024f0, L_0000022958501690, C4<1>, C4<1>;
+L_00000229585d8710 .functor AND 1, L_0000022958501690, L_00000229585008d0, C4<1>, C4<1>;
+L_00000229585d8400 .functor AND 1, L_00000229585008d0, L_00000229585024f0, C4<1>, C4<1>;
+L_00000229585d87f0 .functor OR 1, L_00000229585d86a0, L_00000229585d8710, L_00000229585d8400, C4<0>;
+v00000229584fd2e0_0 .net/s "a", 0 0, L_00000229585024f0;  1 drivers
+v00000229584fcb60_0 .net/s "b", 0 0, L_0000022958501690;  1 drivers
+v00000229584fc5c0_0 .net/s "c", 0 0, L_00000229585008d0;  1 drivers
+v00000229584fcc00_0 .net/s "carry", 0 0, L_00000229585d87f0;  1 drivers
+v00000229584fcf20_0 .net "d", 0 0, L_00000229585d86a0;  1 drivers
+v00000229584fe850_0 .net "e", 0 0, L_00000229585d8710;  1 drivers
+v00000229584fecb0_0 .net "f", 0 0, L_00000229585d8400;  1 drivers
+v00000229584fd9f0_0 .net/s "sum", 0 0, L_00000229585d8e80;  1 drivers
+S_0000022958460790 .scope generate, "genblk1[3]" "genblk1[3]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958453050 .param/l "i" 0 5 28, +C4<011>;
+S_00000229584592d0 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_0000022958460790;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d8f60 .functor XOR 1, L_0000022958501870, L_0000022958500fb0, L_0000022958501e10, C4<0>;
+L_00000229585d8550 .functor AND 1, L_0000022958501870, L_0000022958500fb0, C4<1>, C4<1>;
+L_00000229585d8e10 .functor AND 1, L_0000022958500fb0, L_0000022958501e10, C4<1>, C4<1>;
+L_00000229585d8390 .functor AND 1, L_0000022958501e10, L_0000022958501870, C4<1>, C4<1>;
+L_00000229585d8be0 .functor OR 1, L_00000229585d8550, L_00000229585d8e10, L_00000229585d8390, C4<0>;
+v00000229584fee90_0 .net/s "a", 0 0, L_0000022958501870;  1 drivers
+v00000229584ff2f0_0 .net/s "b", 0 0, L_0000022958500fb0;  1 drivers
+v00000229584fd8b0_0 .net/s "c", 0 0, L_0000022958501e10;  1 drivers
+v00000229584fe8f0_0 .net/s "carry", 0 0, L_00000229585d8be0;  1 drivers
+v00000229584fe670_0 .net "d", 0 0, L_00000229585d8550;  1 drivers
+v00000229584fda90_0 .net "e", 0 0, L_00000229585d8e10;  1 drivers
+v00000229584fd950_0 .net "f", 0 0, L_00000229585d8390;  1 drivers
+v00000229584fdd10_0 .net/s "sum", 0 0, L_00000229585d8f60;  1 drivers
+S_0000022958459460 .scope generate, "genblk1[4]" "genblk1[4]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_00000229584535d0 .param/l "i" 0 5 28, +C4<0100>;
+S_0000022958422850 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_0000022958459460;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d8470 .functor XOR 1, L_0000022958501050, L_00000229585010f0, L_0000022958501370, C4<0>;
+L_00000229585d84e0 .functor AND 1, L_0000022958501050, L_00000229585010f0, C4<1>, C4<1>;
+L_00000229585d8780 .functor AND 1, L_00000229585010f0, L_0000022958501370, C4<1>, C4<1>;
+L_00000229585d8630 .functor AND 1, L_0000022958501370, L_0000022958501050, C4<1>, C4<1>;
+L_00000229585d88d0 .functor OR 1, L_00000229585d84e0, L_00000229585d8780, L_00000229585d8630, C4<0>;
+v00000229584fe3f0_0 .net/s "a", 0 0, L_0000022958501050;  1 drivers
+v00000229584fdb30_0 .net/s "b", 0 0, L_00000229585010f0;  1 drivers
+v00000229584ff070_0 .net/s "c", 0 0, L_0000022958501370;  1 drivers
+v00000229584fe0d0_0 .net/s "carry", 0 0, L_00000229585d88d0;  1 drivers
+v00000229584fdbd0_0 .net "d", 0 0, L_00000229585d84e0;  1 drivers
+v00000229584fddb0_0 .net "e", 0 0, L_00000229585d8780;  1 drivers
+v00000229584fed50_0 .net "f", 0 0, L_00000229585d8630;  1 drivers
+v00000229584fea30_0 .net/s "sum", 0 0, L_00000229585d8470;  1 drivers
+S_00000229584229e0 .scope generate, "genblk1[5]" "genblk1[5]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_00000229584531d0 .param/l "i" 0 5 28, +C4<0101>;
+S_00000229584a4d90 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_00000229584229e0;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d8d30 .functor XOR 1, L_0000022958501910, L_0000022958494c80, L_00000229584955e0, C4<0>;
+L_00000229585d8860 .functor AND 1, L_0000022958501910, L_0000022958494c80, C4<1>, C4<1>;
+L_00000229585d89b0 .functor AND 1, L_0000022958494c80, L_00000229584955e0, C4<1>, C4<1>;
+L_00000229585d85c0 .functor AND 1, L_00000229584955e0, L_0000022958501910, C4<1>, C4<1>;
+L_00000229585d8ef0 .functor OR 1, L_00000229585d8860, L_00000229585d89b0, L_00000229585d85c0, C4<0>;
+v00000229584fe5d0_0 .net/s "a", 0 0, L_0000022958501910;  1 drivers
+v00000229584ff750_0 .net/s "b", 0 0, L_0000022958494c80;  1 drivers
+v00000229584fdc70_0 .net/s "c", 0 0, L_00000229584955e0;  1 drivers
+v00000229584ff110_0 .net/s "carry", 0 0, L_00000229585d8ef0;  1 drivers
+v00000229584fe350_0 .net "d", 0 0, L_00000229585d8860;  1 drivers
+v00000229584fe490_0 .net "e", 0 0, L_00000229585d89b0;  1 drivers
+v00000229584fec10_0 .net "f", 0 0, L_00000229585d85c0;  1 drivers
+v00000229584fe530_0 .net/s "sum", 0 0, L_00000229585d8d30;  1 drivers
+S_00000229585006d0 .scope generate, "genblk1[6]" "genblk1[6]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958453810 .param/l "i" 0 5 28, +C4<0110>;
+S_00000229584ffd70 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_00000229585006d0;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d80f0 .functor XOR 1, L_0000022958494be0, L_0000022958494960, L_0000022958495540, C4<0>;
+L_00000229585d8b70 .functor AND 1, L_0000022958494be0, L_0000022958494960, C4<1>, C4<1>;
+L_00000229585d8da0 .functor AND 1, L_0000022958494960, L_0000022958495540, C4<1>, C4<1>;
+L_00000229585d8a90 .functor AND 1, L_0000022958495540, L_0000022958494be0, C4<1>, C4<1>;
+L_00000229585d8b00 .functor OR 1, L_00000229585d8b70, L_00000229585d8da0, L_00000229585d8a90, C4<0>;
+v00000229584fe710_0 .net/s "a", 0 0, L_0000022958494be0;  1 drivers
+v00000229584fe7b0_0 .net/s "b", 0 0, L_0000022958494960;  1 drivers
+v00000229584fde50_0 .net/s "c", 0 0, L_0000022958495540;  1 drivers
+v00000229584ff390_0 .net/s "carry", 0 0, L_00000229585d8b00;  1 drivers
+v00000229584fdf90_0 .net "d", 0 0, L_00000229585d8b70;  1 drivers
+v00000229584fe210_0 .net "e", 0 0, L_00000229585d8da0;  1 drivers
+v00000229584fef30_0 .net "f", 0 0, L_00000229585d8a90;  1 drivers
+v00000229584fdef0_0 .net/s "sum", 0 0, L_00000229585d80f0;  1 drivers
+S_00000229584fff00 .scope generate, "genblk1[7]" "genblk1[7]" 5 28, 5 28 0, S_0000022958455dc0;
+ .timescale -9 -9;
+P_0000022958453510 .param/l "i" 0 5 28, +C4<0111>;
+S_00000229584ffa50 .scope module, "fa1_inst" "fa1" 5 29, 5 1 0, S_00000229584fff00;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "a";
+    .port_info 1 /INPUT 1 "b";
+    .port_info 2 /INPUT 1 "c";
+    .port_info 3 /OUTPUT 1 "sum";
+    .port_info 4 /OUTPUT 1 "carry";
+L_00000229585d8fd0 .functor XOR 1, L_0000022958494aa0, L_0000022958494820, L_0000022958494d20, C4<0>;
+L_00000229585d8160 .functor AND 1, L_0000022958494aa0, L_0000022958494820, C4<1>, C4<1>;
+L_00000229585d8940 .functor AND 1, L_0000022958494820, L_0000022958494d20, C4<1>, C4<1>;
+L_00000229585d81d0 .functor AND 1, L_0000022958494d20, L_0000022958494aa0, C4<1>, C4<1>;
+L_00000229585d8a20 .functor OR 1, L_00000229585d8160, L_00000229585d8940, L_00000229585d81d0, C4<0>;
+v00000229584fedf0_0 .net/s "a", 0 0, L_0000022958494aa0;  1 drivers
+v00000229584fe030_0 .net/s "b", 0 0, L_0000022958494820;  1 drivers
+v00000229584fefd0_0 .net/s "c", 0 0, L_0000022958494d20;  1 drivers
+v00000229584ff1b0_0 .net/s "carry", 0 0, L_00000229585d8a20;  1 drivers
+v00000229584fe170_0 .net "d", 0 0, L_00000229585d8160;  1 drivers
+v00000229584fe2b0_0 .net "e", 0 0, L_00000229585d8940;  1 drivers
+v00000229584ff250_0 .net "f", 0 0, L_00000229585d81d0;  1 drivers
+v00000229584ff430_0 .net/s "sum", 0 0, L_00000229585d8fd0;  1 drivers
+S_0000022958500220 .scope module, "pc_inst" "program_counter" 2 28, 6 1 0, S_000002295849fa40;
+ .timescale -9 -9;
+    .port_info 0 /INPUT 1 "clk";
+    .port_info 1 /INPUT 8 "next_addr";
+    .port_info 2 /OUTPUT 8 "curr_addr";
+v0000022958501c30_0 .var/s "PC", 7 0;
+v0000022958500ab0_0 .net "clk", 0 0, v0000022958500d30_0;  alias, 1 drivers
+v0000022958501230_0 .net "curr_addr", 7 0, v0000022958501c30_0;  alias, 1 drivers
+v0000022958501ff0_0 .net/s "next_addr", 7 0, L_00000229584952c0;  alias, 1 drivers
+    .scope S_0000022958500220;
+T_0 ;
+    %pushi/vec4 252, 0, 8;
+    %store/vec4 v0000022958501c30_0, 0, 8;
+    %vpi_call 6 11 "$display", "PC updated to %d", v0000022958501c30_0 {0 0 0};
+    %end;
+    .thread T_0;
+    .scope S_0000022958500220;
+T_1 ;
+    %wait E_0000022958497f50;
+    %load/vec4 v0000022958501ff0_0;
+    %pad/s 32;
+    %cmpi/s 0, 0, 32;
+    %flag_inv 5; GE is !LT
+    %jmp/0xz  T_1.0, 5;
+    %load/vec4 v0000022958501ff0_0;
+    %assign/vec4 v0000022958501c30_0, 0;
+    %jmp T_1.1;
+T_1.0 ;
+    %pushi/vec4 0, 0, 8;
+    %assign/vec4 v0000022958501c30_0, 0;
+T_1.1 ;
+    %jmp T_1;
+    .thread T_1;
+    .scope S_0000022958500220;
+T_2 ;
+    %wait E_0000022958497f50;
+    %delay 1, 0;
+    %vpi_call 6 25 "$display", "----------------------------------------------------------" {0 0 0};
+    %vpi_call 6 26 "$display", "\012 \012PC updated to %d", v0000022958501c30_0 {0 0 0};
+    %jmp T_2;
+    .thread T_2;
+    .scope S_0000022958495c90;
+T_3 ;
+    %vpi_call 4 12 "$readmemh", "../Instructions.mem", v00000229584fbda0 {0 0 0};
+    %end;
+    .thread T_3;
+    .scope S_0000022958496c10;
+T_4 ;
+    %wait E_0000022958497f50;
+    %load/vec4 v0000022958485110_0;
+    %assign/vec4 v0000022958485250_0, 0;
+    %load/vec4 v00000229584fbb20_0;
+    %assign/vec4 v00000229584fc8e0_0, 0;
+    %load/vec4 v0000022958485110_0;
+    %parti/s 7, 0, 2;
+    %assign/vec4 v0000022958484c10_0, 0;
+    %load/vec4 v0000022958485110_0;
+    %parti/s 5, 7, 4;
+    %assign/vec4 v00000229584fd100_0, 0;
+    %load/vec4 v0000022958485110_0;
+    %parti/s 5, 15, 5;
+    %assign/vec4 v00000229584fd560_0, 0;
+    %load/vec4 v0000022958485110_0;
+    %parti/s 5, 20, 6;
+    %assign/vec4 v00000229584fd740_0, 0;
+    %jmp T_4;
+    .thread T_4;
+    .scope S_0000022958496c10;
+T_5 ;
+    %wait E_0000022958497810;
+    %load/vec4 v0000022958484c10_0;
+    %dup/vec4;
+    %pushi/vec4 51, 0, 7;
+    %cmp/u;
+    %jmp/1 T_5.0, 6;
+    %dup/vec4;
+    %pushi/vec4 19, 0, 7;
+    %cmp/u;
+    %jmp/1 T_5.1, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 7;
+    %cmp/u;
+    %jmp/1 T_5.2, 6;
+    %dup/vec4;
+    %pushi/vec4 35, 0, 7;
+    %cmp/u;
+    %jmp/1 T_5.3, 6;
+    %dup/vec4;
+    %pushi/vec4 99, 0, 7;
+    %cmp/u;
+    %jmp/1 T_5.4, 6;
+    %vpi_call 3 66 "$display", "\012 --> Ins Fetch: Undefined opcode: %b", v0000022958484c10_0 {0 0 0};
+    %jmp T_5.6;
+T_5.0 ;
+    %vpi_call 3 45 "$display", "\012 --> Ins Fetch: R-format with opcode 0110011" {0 0 0};
+    %jmp T_5.6;
+T_5.1 ;
+    %vpi_call 3 49 "$display", "\012 --> Ins Fetch: I-format with opcode 0010011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %vpi_call 3 50 "$display", "adding rs1=%d with imm=%d in rd=%d \011 \011 x%d = x%d + %d", v00000229584fd4c0_0, S<1,vec4,s12>, v00000229584fd060_0, v00000229584fd060_0, v00000229584fd4c0_0, S<0,vec4,s12> {2 0 0};
+    %jmp T_5.6;
+T_5.2 ;
+    %vpi_call 3 53 "$display", "\012 --> Ins Fetch: Load with opcode 0000011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %vpi_call 3 54 "$display", "loading from 'address in rs1'=%d with offset imm= %d in rd=%d", v00000229584fd4c0_0, S<0,vec4,s12>, v00000229584fd060_0 {1 0 0};
+    %jmp T_5.6;
+T_5.3 ;
+    %vpi_call 3 57 "$display", "\012 --> Ins Fetch: Store with opcode 0100011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %replicate 52;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 7, 25, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 5, 7, 4;
+    %concat/vec4; draw_concat_vec4
+    %vpi_call 3 58 "$display", "storing to 'address in rs1'=%d with offset imm= %d from rs2=%d", v00000229584fd4c0_0, S<0,vec4,s64>, v00000229584fb940_0 {1 0 0};
+    %jmp T_5.6;
+T_5.4 ;
+    %vpi_call 3 61 "$display", "\012 --> Ins Fetch: Branch with opcode 1100011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %replicate 52;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 7, 4;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 6, 25, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 4, 8, 5;
+    %concat/vec4; draw_concat_vec4
+    %vpi_call 3 62 "$display", "branching if rs1=%d is equal to rs2=%d to PC = %d + 2*imm= %d", v00000229584fd4c0_0, v00000229584fb940_0, v00000229584fc8e0_0, S<0,vec4,s64> {1 0 0};
+    %jmp T_5.6;
+T_5.6 ;
+    %pop/vec4 1;
+    %jmp T_5;
+    .thread T_5, $push;
+    .scope S_0000022958496c10;
+T_6 ;
+    %wait E_0000022958497f50;
+    %load/vec4 v0000022958484c10_0;
+    %dup/vec4;
+    %pushi/vec4 51, 0, 7;
+    %cmp/u;
+    %jmp/1 T_6.0, 6;
+    %dup/vec4;
+    %pushi/vec4 19, 0, 7;
+    %cmp/u;
+    %jmp/1 T_6.1, 6;
+    %dup/vec4;
+    %pushi/vec4 3, 0, 7;
+    %cmp/u;
+    %jmp/1 T_6.2, 6;
+    %dup/vec4;
+    %pushi/vec4 35, 0, 7;
+    %cmp/u;
+    %jmp/1 T_6.3, 6;
+    %dup/vec4;
+    %pushi/vec4 99, 0, 7;
+    %cmp/u;
+    %jmp/1 T_6.4, 6;
+    %vpi_call 3 97 "$display", "\012 --> Ins Decode: Undefined opcode: %b", v0000022958484c10_0 {0 0 0};
+    %jmp T_6.6;
+T_6.0 ;
+    %vpi_call 3 76 "$display", "\012 --> Ins Decode: R-format with opcode 0110011" {0 0 0};
+    %jmp T_6.6;
+T_6.1 ;
+    %vpi_call 3 80 "$display", "\012 --> Ins Decode: I-format with opcode 0010011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %vpi_call 3 81 "$display", "adding rs1=%d with imm=%d in rd=%d \011 \011 x%d = x%d + %d", v00000229584fd4c0_0, S<1,vec4,s12>, v00000229584fd060_0, v00000229584fd060_0, v00000229584fd4c0_0, S<0,vec4,s12> {2 0 0};
+    %jmp T_6.6;
+T_6.2 ;
+    %vpi_call 3 84 "$display", "\012 --> Ins Decode: Load with opcode 0000011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 12, 20, 6;
+    %vpi_call 3 85 "$display", "loading from 'address in rs1'=%d with offset imm= %d in rd=%d", v00000229584fd4c0_0, S<0,vec4,s12>, v00000229584fd060_0 {1 0 0};
+    %jmp T_6.6;
+T_6.3 ;
+    %vpi_call 3 88 "$display", "\012 --> Ins Decode: Store with opcode 0100011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %replicate 52;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 7, 25, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 5, 7, 4;
+    %concat/vec4; draw_concat_vec4
+    %vpi_call 3 89 "$display", "storing to 'address in rs1'=%d with offset imm= %d from rs2=%d", v00000229584fd4c0_0, S<0,vec4,s64>, v00000229584fb940_0 {1 0 0};
+    %jmp T_6.6;
+T_6.4 ;
+    %vpi_call 3 92 "$display", "\012 --> Ins Decode: Branch with opcode 1100011" {0 0 0};
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %replicate 52;
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 31, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 1, 7, 4;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 6, 25, 6;
+    %concat/vec4; draw_concat_vec4
+    %load/vec4 v0000022958485250_0;
+    %parti/s 4, 8, 5;
+    %concat/vec4; draw_concat_vec4
+    %vpi_call 3 93 "$display", "branching if rs1=%d is equal to rs2=%d to PC = %d + 2*imm= %d", v00000229584fd4c0_0, v00000229584fb940_0, v00000229584fc8e0_0, S<0,vec4,s64> {1 0 0};
+    %jmp T_6.6;
+T_6.6 ;
+    %pop/vec4 1;
+    %jmp T_6;
+    .thread T_6;
+    .scope S_000002295849fa40;
+T_7 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000022958500d30_0, 0, 1;
+T_7.0 ;
+    %delay 5, 0;
+    %load/vec4 v0000022958500d30_0;
+    %inv;
+    %store/vec4 v0000022958500d30_0, 0, 1;
+    %jmp T_7.0;
+    %end;
+    .thread T_7;
+    .scope S_000002295849fa40;
+T_8 ;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v00000229585023b0_0, 0, 1;
+    %pushi/vec4 0, 0, 1;
+    %store/vec4 v0000022958500bf0_0, 0, 1;
+    %pushi/vec4 0, 0, 8;
+    %store/vec4 v0000022958501af0_0, 0, 8;
+    %vpi_call 2 76 "$dumpfile", "instruction_fetch.vcd" {0 0 0};
+    %vpi_call 2 77 "$dumpvars", 32'sb00000000000000000000000000000000, S_000002295849fa40 {0 0 0};
+    %vpi_call 2 80 "$display", "Time\011PC\011Instruction\011Next PC" {0 0 0};
+    %vpi_call 2 81 "$display", "-----------------------------------------" {0 0 0};
+    %delay 100, 0;
+    %vpi_call 2 86 "$display", "\012IF/ID Register Final State:" {0 0 0};
+    %vpi_call 2 87 "$display", "PC_out: %d, Instruction: %h", v00000229585014b0_0, v0000022958501190_0 {0 0 0};
+    %vpi_call 2 88 "$display", "Control: %b, rd: %d, rs1: %d, rs2: %d", v0000022958502090_0, v0000022958500b50_0, v0000022958500dd0_0, v0000022958500970_0 {0 0 0};
+    %vpi_call 2 90 "$finish" {0 0 0};
+    %end;
+    .thread T_8;
+    .scope S_000002295849fa40;
+T_9 ;
+    %vpi_func 2 102 "$fopen" 32, "../Instructions.mem", "r" {0 0 0};
+    %nor/r;
+    %flag_set/vec4 8;
+    %jmp/0xz  T_9.0, 8;
+    %vpi_call 2 103 "$display", "ERROR: Instructions.mem file not found!" {0 0 0};
+    %vpi_call 2 104 "$finish" {0 0 0};
+T_9.0 ;
+    %end;
+    .thread T_9;
+# The file index is used to find the file name in the following table.
+:file_names 7;
+    "N/A";
+    "<interactive>";
+    "insmemtb.v";
+    "./../Registers/IF_ID.v";
+    "./Instruction_mem.v";
+    "./pc_increment.v";
+    "./pc.v";
