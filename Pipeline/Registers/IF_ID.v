@@ -21,6 +21,7 @@ module IF_ID(
         rs2_reg <= instruction_in[24:20];   // rs2 field
     end
 
+
     // Bit Slicing of Instruction 
     reg [6:0] ctrl_reg;
     reg [4:0] rs1_reg;

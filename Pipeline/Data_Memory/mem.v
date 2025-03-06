@@ -28,6 +28,7 @@ module mem(
     end
     end
 
+
     always @ (*) begin
         if(MemRead) begin
         data_out_reg <= memory[address];

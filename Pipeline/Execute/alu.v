@@ -10,6 +10,7 @@ module ALU(rs1,rs2,control,rd, zero, carry, overflow);
     output signed [63:0] rd;
     output zero,carry,overflow;
 
+
     // register outputs
     reg signed[63:0] ALU_output;
     reg zero_output, carry_output, overflow_output;
