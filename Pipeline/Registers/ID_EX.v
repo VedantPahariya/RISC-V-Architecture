@@ -47,4 +47,10 @@ always @(posedge clk) begin
     rd  <= IF_ID_rd;
 end
 
+always @(posedge clk) begin
+    #1;
+    // $display("ID_EX: rs1_data_out = %d, rs2_data_out = %d, rd_data_out = %d, imm_out = %d, pc_out = %d, MemtoReg_out = %d, regwrite_out = %d, branch_out = %d, MemRead_out = %d, MemWrite_out = %d, alu_src_out = %d, alu_op_out = %d, instruction_out = %d, rs1 = %d, rs2 = %d, rd = %d", rs1_data_out, rs2_data_out, rd_data_out, imm_out, pc_out, MemtoReg_out, regwrite_out, branch_out, MemRead_out, MemWrite_out, alu_src_out, alu_op_out, instruction_out, rs1, rs2, rd);
+    $display("ID_EX: rs1 = %d, rs2 = %d, rd = %d", rs1, rs2, rd);
+end
+
 endmodule

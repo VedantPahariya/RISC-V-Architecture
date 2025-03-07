@@ -14,7 +14,6 @@ module EX_MEM (
     //for fwd unit
     input [4:0] Rd,
 
-
     // Control Inputs
     input MemtoReg, // WB
     input regwrite, // WB
@@ -46,6 +45,12 @@ always @(posedge clk) begin
         MemRead_out   <= MemRead;
         MemWrite_out  <= MemWrite;
         EX_MEM_rd     <= Rd;
+    end
+
+    always@(posedge clk) begin
+        #1;
+        // $display("EX_MEM: ALU_data_out = %d, rd_data_out = %d, branch_target_out = %d, zero_out = %d, MemtoReg_out = %d, regwrite_out = %d, branch_out = %d, MemRead_out = %d, MemWrite_out = %d, EX_MEM_rd = %d", ALU_data_out, rd_data_out, branch_target_out, zero_out, MemtoReg_out, regwrite_out, branch_out, MemRead_out, MemWrite_out, EX_MEM_rd);
+        $display("EX_MEM: EX_MEM_rd = %d", EX_MEM_rd);
     end
 
 endmodule
