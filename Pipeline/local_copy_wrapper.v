@@ -13,9 +13,7 @@
 `include "./Execute/alu.v"
 `include "./Execute/alu_control.v"
 `include "./Data_Memory/mem.v"
-`include "./Writeback/writeback_mux.v"
-`include "./Execute/forward_muxes.v"
-`include "./forwarding_unit.v"
+`include "./WriteBack/writeback_mux.v"
 
 module tb_instruction_decode;
     // Inputs
@@ -76,14 +74,6 @@ module tb_instruction_decode;
     wire signed [63:0] ALU_data_out_mem_wb, read_Data_out_mem_wb;
     wire signed [63:0] write_back_data;
 
-    wire signed [63:0] alu_in1, alu_in2;
- // Forwarding Unit wires
-    wire [1:0] fwd_A, fwd_B;
-
-    wire pc_write;
-    wire IF_ID_Write;
-    wire stall;
-
     // Instantiate Program Counter
     program_counter pc_inst (
         .clk(clk),
@@ -105,7 +95,8 @@ module tb_instruction_decode;
         .zero_flag(zero_flag),
         .address_out(next_pc)
     );
-
+    
+    // Instantiate IF/ID Register
     IF_ID if_id_reg (
         .clk(clk),
         .instruction_in(instruction),
@@ -187,7 +178,7 @@ module tb_instruction_decode;
     );
 
     // ALU input mux
-    assign alu_in2 = alu_src_id_ex ? imm_id_ex : alu_input2;
+    assign alu_input2 = alu_src_id_ex ? imm_id_ex : rs2_data_id_ex;
 
     // Instantiate ALU Control
     alucontrol alu_ctrl (
@@ -198,8 +189,8 @@ module tb_instruction_decode;
 
     // Instantiate ALU
     ALU alu_unit (
-        .rs1(alu_in1),
-        .rs2(alu_in2),
+        .rs1(rs1_data_id_ex),
+        .rs2(alu_input2),
         .control(alu_control_op),
         .rd(alu_result),              
         .zero(alu_zero),              
@@ -207,33 +198,11 @@ module tb_instruction_decode;
         .overflow(alu_overflow)       
     );
 
-    forward_mux forward_mux_inst (
-        .ID_EX_rs1_value(rs1_data_id_ex),
-        .ID_EX_rs2_value(rs2_data_id_ex),
-        .EX_MEM_ALU_Out(ALU_data_out_ex_mem),
-        .writeback_mux_value(write_back_data),
-        .ForwardA(fwd_A),
-        .ForwardB(fwd_B),
-        .alu_in_A(alu_in1),
-        .alu_in_B(alu_input2)
-    );
-
-    forwarding_unit forward_unit (
-        .ID_EX_rs1(rs1_id_ex),
-        .ID_EX_rs2(rs2_id_ex),
-        .EX_MEM_rd(EX_MEM_rd),
-        .MEM_WB_rd(MEM_WB_rd),
-        .EX_MEM_regWrite(regwrite_ex_mem),
-        .MEM_WB_regWrite(regwrite_mem_wb),
-        .fwd_A(fwd_A),
-        .fwd_B(fwd_B)
-    );
-
     // Instantiate EX/MEM Register with corrected port names
     EX_MEM ex_mem_reg (
         .clk(clk),
         .ALU_data(alu_result),           
-        .rd_data(alu_input2),        
+        .rd_data(rs2_data_id_ex),        
         .branch_target(pc_out_id_ex),    
         .zero(alu_zero),                 
         .Rd(rd_id_ex),                   

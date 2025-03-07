@@ -26,6 +26,8 @@ output [1:0] fwd_B
                  fwd_B_reg = 01;
             else 
                  fwd_B_reg=00;
+        #2;
+        $display("forwarding_unit: fwd_A_reg = %d, fwd_B_reg = %d", fwd_A_reg, fwd_B_reg);
         end
         
         assign fwd_A = fwd_A_reg;

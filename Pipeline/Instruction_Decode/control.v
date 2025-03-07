@@ -73,7 +73,7 @@ module control(
                     alu_op_reg = 2'b01;
                 end
                 default: begin
-                    branch _reg= 0;
+                    branch_reg= 0;
                     RegWrite_reg = 0;
                     MemtoReg_reg = 0;
                     MemRead_reg = 0;

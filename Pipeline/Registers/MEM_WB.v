@@ -36,7 +36,7 @@ module MEM_WB (
     end
 
  always@(posedge clk) begin
-    #1;
+    #3;
     // $display("MEM_WB: read_Data_out = %d, ALU_data_out = %d, MemtoReg_out = %d, regwrite_out = %d, MEM_WB_rd = %d", read_Data_out, ALU_data_out, MemtoReg_out, regwrite_out, MEM_WB_rd);
     $display("MEM_WB: MEM_WB_rd = %d", MEM_WB_rd);
     end

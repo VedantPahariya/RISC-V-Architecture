@@ -1,0 +1,4 @@
+(1) curr_addr //between PC and Instruction mem
+(2) instruction_input // between Instruction mem and IF/ID
+(3) IF/ID_Write // Hazard block and IF/ID reg
+(4)
