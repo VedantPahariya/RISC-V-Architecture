@@ -1,12 +1,12 @@
-module forward_mux_a(
+module forward_mux(
 input signed [63:0] ID_EX_rs1_value,
 input signed [63:0] ID_EX_rs2_value,
 input signed [63:0] EX_MEM_rd_value,
 input signed [63:0] writeback_mux_value,
 input [1:0] ForwardA,
 input [1:0] ForwardB,
-output signed [63:0] alu_in_A;
-output signed [63:0] alu_in_B;
+output signed [63:0] alu_in_A,
+output signed [63:0] alu_in_B
 );
 
         reg signed [63:0] alu_in_A_reg;
