@@ -37,11 +37,11 @@ module pc_increment(
     input signed[7:0] branch_target, // Branch target address
     input branch,                   // Branch control signal
     input zero_flag,                // Zero flag
-    output [7:0] address_out        // Output address
+    output [7:0] address_out,        // Output address
+    output PCsrc                    // Branch control signal // AND of branch and zero
 );
 
     wire [7:0] pc_plus_4;       // Holds address + 4
-    wire PCsrc;           // AND of branch and zero
 
     // Increment PC by 4 using ADD module
     ADD4 add_inst (.rs1(curr_addr), .rd(pc_plus_4));
@@ -53,5 +53,9 @@ module pc_increment(
 
     // MUX for the brach_target and pc_plus_4
     assign address_out = PCsrc ? branch_target : pc_plus_4;
+
+    always @(*) begin
+        $display("branch_target: %b", branch_target);
+    end
 
 endmodule

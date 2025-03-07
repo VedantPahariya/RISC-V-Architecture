@@ -5,6 +5,7 @@
 
 module EX_MEM (
     input clk,  
+    input PCsrc,
     // Data Inputs
     input [63:0] ALU_data, rd_data, // Data from registers
     // input rs_2_in, 
@@ -32,9 +33,8 @@ module EX_MEM (
     //for fwd unit this output also goes to fwd unit and to MEM/WB register
     output reg [4:0] EX_MEM_rd 
 );
-
 always @(posedge clk) begin
-        // Forward all inputs to outputs
+    if (!PCsrc) begin
         ALU_data_out  <= ALU_data;
         rd_data_out   <= rd_data;
         branch_target_out <= branch_target;
@@ -46,6 +46,19 @@ always @(posedge clk) begin
         MemWrite_out  <= MemWrite;
         EX_MEM_rd     <= Rd;
     end
+    else begin
+        ALU_data_out  <= 64'b0;
+        rd_data_out   <= 64'b0;
+        branch_target_out <= 8'b0;
+        zero_out      <= 1'b0;
+        MemtoReg_out  <= 1'b0;
+        regwrite_out  <= 1'b0;
+        branch_out    <= 1'b0;
+        MemRead_out   <= 1'b0;
+        MemWrite_out  <= 1'b0;
+        EX_MEM_rd     <= 5'b0;
+    end
+end
 
     always@(posedge clk) begin
         #3;

@@ -46,14 +46,15 @@ module adder(
     // Shift immediate left by 1 (multiplication by 2)
     assign imm_shifted = {immgen[62:0], 1'b0}; 
     
-    always @(immgen) begin #1
-        //$display("\n --> adder: immgen:%d imm_shifted:%d zero_flag:%d",immgen, imm_shifted,zero_flag);
-        $display("\n --> adder:zero_flag:%d",zero_flag);
-    end
-    
     wire signed[7:0] branch_target_8;
     // Add 64-bit address1 and shifted immediate value
     ADD_beq add_inst2 (.rs1(address1), .rs2(imm_shifted), .rd(branch_target_8));
 
     assign branch_target = branch_target_8;
+
+    always @(*) begin
+        $display("PC in branch adder: %d", address);
+        $display("immediate in branch adder: %d", immgen);
+        $display("branch_target: %d", branch_target);
+    end
 endmodule

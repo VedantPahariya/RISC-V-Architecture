@@ -1,5 +1,6 @@
 module ID_EX (
     input clk,
+    input PCsrc,
     input [63:0] rs1_data, rs2_data, rd_data, // Data from registers
     input [63:0] imm_gen, // Immediate value
     input [7:0] pc_in, // Program Counter
@@ -29,22 +30,42 @@ module ID_EX (
 );
 
 always @(posedge clk) begin
-    rs1_data_out <= rs1_data;
-    rs2_data_out <= rs2_data;
-    rd_data_out  <= rd_data;
-    imm_out      <= imm_gen;
-    pc_out       <= pc_in;
-    MemtoReg_out <= MemtoReg;
-    regwrite_out <= regwrite;
-    branch_out   <= branch;
-    MemRead_out  <= MemRead;
-    MemWrite_out <= MemWrite;
-    alu_src_out  <= alu_src;
-    alu_op_out   <= alu_op;
-    instruction_out <= instruction;
-    rs1 <= IF_ID_rs1;
-    rs2 <= IF_ID_rs2;
-    rd  <= IF_ID_rd;
+    if (!PCsrc) begin
+        rs1_data_out <= rs1_data;
+        rs2_data_out <= rs2_data;
+        rd_data_out  <= rd_data;
+        imm_out      <= imm_gen;
+        pc_out       <= pc_in;
+        MemtoReg_out <= MemtoReg;
+        regwrite_out <= regwrite;
+        branch_out   <= branch;
+        MemRead_out  <= MemRead;
+        MemWrite_out <= MemWrite;
+        alu_src_out  <= alu_src;
+        alu_op_out   <= alu_op;
+        instruction_out <= instruction;
+        rs1 <= IF_ID_rs1;
+        rs2 <= IF_ID_rs2;
+        rd  <= IF_ID_rd;
+    end
+    else begin
+        rs1_data_out <= 64'b0;
+        rs2_data_out <= 64'b0;
+        rd_data_out  <= 64'b0;
+        imm_out      <= 64'b0;
+        pc_out       <= 8'b0;
+        MemtoReg_out <= 1'b0;
+        regwrite_out <= 1'b0;
+        branch_out   <= 1'b0;
+        MemRead_out  <= 1'b0;
+        MemWrite_out <= 1'b0;
+        alu_src_out  <= 1'b0;
+        alu_op_out   <= 2'b0;
+        instruction_out <= 32'b0;
+        rs1 <= 5'b0;
+        rs2 <= 5'b0;
+        rd  <= 5'b0;
+    end
 end
 
 always @(posedge clk) begin

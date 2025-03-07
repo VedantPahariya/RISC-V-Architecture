@@ -1,6 +1,7 @@
 // Memory Block of ALU
 module IF_ID(
     input clk,
+    input PCsrc,
     input [31:0] instruction_in,
     input [7:0] pc_in,
     input IF_ID_Write,
@@ -13,18 +14,27 @@ module IF_ID(
 );
 
     always @(posedge clk) begin
-        if(IF_ID_Write) begin
-        instruction_out <= instruction_in;
-        pc_out <= pc_in;
+        if (PCsrc == 0) begin
+            if(IF_ID_Write) begin
+                instruction_out <= instruction_in;
+                pc_out <= pc_in;
 
-        ctrl_reg <= instruction_in[6:0];    // opcode
-        rd_reg <= instruction_in[11:7];     // rd field
-        rs1_reg <= instruction_in[19:15];   // rs1 field
-        rs2_reg <= instruction_in[24:20];   // rs2 field
+                ctrl_reg <= instruction_in[6:0];    // opcode
+                rd_reg <= instruction_in[11:7];     // rd field
+                rs1_reg <= instruction_in[19:15];   // rs1 field
+                rs2_reg <= instruction_in[24:20];   // rs2 field
+            end
+        end
+        else begin
+            instruction_out <= 32'b0;
+            pc_out <= 8'b0;
+            ctrl_reg <= 7'b0;
+            rd_reg <= 5'b0;
+            rs1_reg <= 5'b0;
+            rs2_reg <= 5'b0;
         end
     end
-
-
+    
     // Bit Slicing of Instruction 
     reg [6:0] ctrl_reg;
     reg [4:0] rs1_reg;
