@@ -3,7 +3,7 @@ module IF_ID(
     input clk,
     input [31:0] instruction_in,
     input [7:0] pc_in,
-    //input IF_ID_Write,
+    input IF_ID_Write,
     output [6:0] ctrl,
     output [4:0] rs1,
     output [4:0] rs2,
@@ -13,7 +13,7 @@ module IF_ID(
 );
 
     always @(posedge clk) begin
-        //if(IF_ID_Write) begin
+        if(IF_ID_Write) begin
         instruction_out <= instruction_in;
         pc_out <= pc_in;
 
@@ -21,7 +21,7 @@ module IF_ID(
         rd_reg <= instruction_in[11:7];     // rd field
         rs1_reg <= instruction_in[19:15];   // rs1 field
         rs2_reg <= instruction_in[24:20];   // rs2 field
-        //end
+        end
     end
 
 

@@ -16,6 +16,7 @@
 `include "./Writeback/writeback_mux.v"
 `include "./Execute/forward_muxes.v"
 `include "./forwarding_unit.v"
+`include "./hazard_detection.v"
 
 module tb_instruction_decode;
     // Inputs
@@ -88,7 +89,8 @@ module tb_instruction_decode;
     program_counter pc_inst (
         .clk(clk),
         .next_addr(next_pc),
-        .curr_addr(pc)
+        .curr_addr(pc),
+        .PC_Write(pc_write)
     );
 
     // Instantiate Instruction Memory
@@ -115,7 +117,8 @@ module tb_instruction_decode;
         .rs2(rs2),
         .rd(rd),
         .instruction_out(instruction_out),
-        .pc_out(pc_out)
+        .pc_out(pc_out),
+        .IF_ID_Write(IF_ID_Write)
     );
 
     // Instantiate Control Unit
@@ -127,7 +130,8 @@ module tb_instruction_decode;
         .MemRead(MemRead),
         .MemWrite(MemWrite),
         .alu_src(alu_src),
-        .alu_op(alu_op)
+        .alu_op(alu_op),
+        .stall(stall)
     );
 
     // Instantiate Register File
@@ -286,6 +290,17 @@ module tb_instruction_decode;
         .writeback(write_back_data),
         .MemtoReg(MemtoReg_mem_wb)
     );
+
+    hazard_detection_unit hazard_detection_unit_inst (
+        .IF_ID_rs1(rs1),
+        .IF_ID_rs2(rs2),
+        .ID_EX_rd(rd_id_ex),
+        .ID_EX_MemRead(MemRead_id_ex),
+        .stall(stall),
+        .IF_ID_Write(IF_ID_Write),
+        .PC_Write(pc_write)
+    );
+
 
     // Write back mux
     // assign write_back_data = MemtoReg_mem_wb ? read_Data_out_mem_wb : ALU_data_out_mem_wb;
