@@ -1,7 +1,5 @@
-beq x1, x1, 4
-addi x5, x0, -5 
-addi x6, x0, 6 
-beq x5, x6, 4 
-add x7, x5, x6 
-sub x8, x5, x6 
+addi x1, x0, 2 
+sd x1, 0(x1)
+addi x2, x0, 5
+ld x3, -3(x2)
 addi x31, x0, 1

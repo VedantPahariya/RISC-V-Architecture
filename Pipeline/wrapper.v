@@ -324,13 +324,13 @@ module tb_instruction_decode;
     end
     
     // Monitor values using negedge to ensure values are stable
-    always @(negedge clk) begin
-        $display("%0t\tPC=%d\tInstruction=0x%h\tNext PC=%d", 
-                 $time, pc, instruction, next_pc);
-
+    always @(posedge clk) begin
+        // $display("%0t\tPC=%d\tInstruction=0x%h\tNext PC=%d", 
+        //          $time, pc, instruction, next_pc);
+    #1;
     // Monitor x11 through register file interface
      if (MEM_WB_rd == 5'd31 && regwrite_mem_wb && write_back_data != 0) begin
-        $display("x11 updated to non-zero value (%d), exiting simulation", write_back_data);
+        $display("%0t x31 updated to non-zero value (%d), exiting simulation",$time, write_back_data);
         $finish;
     end
     end
