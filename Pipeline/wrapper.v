@@ -88,6 +88,9 @@ module tb_instruction_decode;
     wire pcsrc;
     wire [7:0] branch_target_input_ex_mem;
 
+    wire [63:0] mem_data_out;
+    wire [63:0] mem_address_write;
+    
     // Instantiate Program Counter
     program_counter pc_inst (
         .clk(clk),
@@ -279,7 +282,9 @@ module tb_instruction_decode;
         .data_in(rd_data_out_ex_mem),  
         .MemWrite(MemWrite_ex_mem),
         .MemRead(MemRead_ex_mem),
-        .data_out(data_out)      
+        .data_out(data_out),
+        .address_out(mem_data_out),
+        .mem_address_write(mem_address_write)
     );
 
     // Instantiate MEM/WB Register with corrected port names

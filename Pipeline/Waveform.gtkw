@@ -1,20 +1,21 @@
 [*]
 [*] GTKWave Analyzer v3.3.100 (w)1999-2019 BSI
-[*] Sat Mar 08 13:36:59 2025
+[*] Sat Mar 08 14:50:48 2025
 [*]
 [dumpfile] "C:\Users\pahar\OneDrive - IIIT Hyderabad\24-25 spring\Intro to Processor Architecture\RISC-V-Architecture\Pipeline\full_pipeline.vcd"
-[dumpfile_mtime] "Sat Mar 08 13:18:18 2025"
-[dumpfile_size] 694627
+[dumpfile_mtime] "Sat Mar 08 14:48:17 2025"
+[dumpfile_size] 688744
 [savefile] "C:\Users\pahar\OneDrive - IIIT Hyderabad\24-25 spring\Intro to Processor Architecture\RISC-V-Architecture\Pipeline\Waveform.gtkw"
 [timestart] 0
 [size] 1536 793
 [pos] -1 -1
-*-5.000000 96 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
-[sst_width] 197
-[signals_width] 302
-[sst_expanded] 1
+*-4.000000 3 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[sst_width] 42
+[signals_width] 246
+[sst_expanded] 0
 [sst_vpaned_height] 221
 @28
+[color] 6
 tb_instruction_decode.clk
 @200
 -
@@ -29,7 +30,6 @@ tb_instruction_decode.instruction[31:0]
 tb_instruction_decode.instruction_out[31:0]
 tb_instruction_decode.instruction_out_id_ex[31:0]
 @200
--
 -Intruction Decode
 @24
 [color] 2
@@ -49,18 +49,19 @@ tb_instruction_decode.rd[4:0]
 -group_end
 @200
 -
-@420
+@24
 [color] 2
 tb_instruction_decode.rs1_data_out[63:0]
 [color] 2
 tb_instruction_decode.rs2_data_out[63:0]
 [color] 2
 tb_instruction_decode.rd_data_out[63:0]
+[color] 2
+tb_instruction_decode.MEM_WB_rd[4:0]
 @200
--
--Execute 
-@c00025
-[color] 5
+-Execute
+@c00024
+[color] 3
 tb_instruction_decode.rs1_id_ex[4:0]
 @28
 (0)tb_instruction_decode.rs1_id_ex[4:0]
@@ -68,27 +69,42 @@ tb_instruction_decode.rs1_id_ex[4:0]
 (2)tb_instruction_decode.rs1_id_ex[4:0]
 (3)tb_instruction_decode.rs1_id_ex[4:0]
 (4)tb_instruction_decode.rs1_id_ex[4:0]
-@1401201
+@1401200
 -group_end
-@25
-[color] 5
+@24
+[color] 3
 tb_instruction_decode.rs2_id_ex[4:0]
-[color] 5
+@c00024
+[color] 3
 tb_instruction_decode.rd_id_ex[4:0]
+@28
+[color] 5
+(0)tb_instruction_decode.rd_id_ex[4:0]
+[color] 5
+(1)tb_instruction_decode.rd_id_ex[4:0]
+[color] 5
+(2)tb_instruction_decode.rd_id_ex[4:0]
+[color] 5
+(3)tb_instruction_decode.rd_id_ex[4:0]
+[color] 5
+(4)tb_instruction_decode.rd_id_ex[4:0]
+@1401200
+-group_end
 @200
 -
 @420
-[color] 5
+[color] 3
 tb_instruction_decode.rs1_data_id_ex[63:0]
-[color] 5
+[color] 3
 tb_instruction_decode.rs2_data_id_ex[63:0]
 @200
 -
 @420
 tb_instruction_decode.imm_out[63:0]
 tb_instruction_decode.imm_id_ex[63:0]
-@200
--
+tb_instruction_decode.mem_data_out[63:0]
+@24
+tb_instruction_decode.mem_address_write[63:0]
 @28
 tb_instruction_decode.pcsrc
 tb_instruction_decode.IF_ID_Write
