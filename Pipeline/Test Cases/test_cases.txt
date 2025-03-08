@@ -1,23 +1,24 @@
-# Fibonacci Sequence (calculates first 10 Fibonacci numbers)
-addi x1, x0, 10       # Number of Fibonacci numbers to generate
-addi x2, x0, 0        # Fib(0) = 0
-addi x3, x0, 1        # Fib(1) = 1
-addi x4, x0, 2        # Counter starting from 2
-addi x10, x0, 0       # Memory pointer for storing results
-sd x2, 0(x10)         # Store Fib(0)
-addi x10, x10, 8      # Increment by 8 for doubleword
-sd x3, 0(x10)         # Store Fib(1)
-addi x10, x10, 8      # Increment by 8 for doubleword
-add x5, x2, x3        # Calculate next Fibonacci number looping starts here
-sd x5, 0(x10)         # Store result in memory
-addi x10, x10, 8      # Increment by 8 for doubleword
-addi x4, x4, 1        # Increment counter
-add x2, x3, x0        # Shift values: x2 = x3
-add x3, x5, x0        # Shift values: x3 = x5
-sub x6, x1, x4        # Calculate x1 - x4
-beq x6, x0, 4         # If counter == limit, exit
-beq x0, x0, -16       # Else continue loop
-addi x11, x0, 0 
+addi x1, x0, 10
+addi x2, x0, 0
+addi x3, x0, 1
+add x2, x2, x3
+add x3, x2, x3
+addi x1, x1, -1
+beq x1, x0, 6
+beq x0, x0, -8
+addi x5, x0, 99
+addi x6, x0, 5
+ld x7, 0(x6)
+addi x7, x7, 1
+beq x7, x0, 12
+addi x8, x0, 1
+addi x9, x0, 1
+beq x8, x9, 4
+addi x10, x0, 50
+addi x11, x0, 1
+addi x13, x0, 2
+addi x31, x0, 1
+
 
 
 
@@ -33,38 +34,6 @@ beq x4, x0, 4         # If counter > limit, exit
 beq x0, x0, -10       # Else continue loop
 addi x10, x0 ,0
 
-
-# Array sum (sum of array elements)
-addi x1, x0, 0        # Initialize array base address
-addi x2, x0, 5        # Array size
-addi x3, x0, 0        # Initialize sum to 0
-addi x4, x0, 0        # Loop counter
-ld x5, 0(x1)          # Load array element loping here
-add x3, x3, x5        # Add to running sum
-addi x1, x1, 8        # Move to next array element (doubleword)
-addi x4, x4, 1        # Increment counter
-sub x6, x2, x4        # Calculate x2 - x4
-beq x6, x0, 4         # If counter == size, exit
-beq x0, x0, -12       # Else continue loop
-addi x10, x0, 0
-
-
-# Linear search (adapted for beq only)
-addi x1, x0, 100      # Array base address
-addi x2, x0, 10       # Array size
-addi x3, x0, 7        # Value to find
-addi x4, x0, 0        # Loop counter
-addi x5, x0, -1       # Result index (starts at -1)
-ld x6, 0(x1)          # Load array element looping from here
-sub x7, x6, x3        # Calculate x6 - x3
-beq x7, x0, 12        # If diff == 0 (equal), jump to found
-addi x1, x1, 8        # Move to next array element (doubleword)
-addi x4, x4, 1        # Increment counter
-sub x7, x2, x4        # Calculate x2 - x4
-beq x7, x0, 6         # If counter == size, exit
-beq x0, x0, -14       # Else continue loop
-add x5, x4, x0        # Store found index
-addi x10, x0, 0       # Continue execution
 
 
 # Even/odd checker for numbers 1-5
