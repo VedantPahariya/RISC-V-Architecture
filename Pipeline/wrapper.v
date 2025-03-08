@@ -9,11 +9,15 @@
 `include "./Instruction_Decode/control.v"
 `include "./Instruction_Decode/registers.v"
 `include "./Instruction_Decode/immgen.v"
+`include "./Instruction_Decode/hazard_detection.v"
 // Additional includes for Execute and Memory stages
 `include "./Execute/alu.v"
 `include "./Execute/alu_control.v"
+`include "./Execute/forward_muxes.v"
+`include "./Execute/adder.v"
 `include "./Data_Memory/mem.v"
-`include "./WriteBack/writeback_mux.v"
+`include "./Writeback/writeback_mux.v"
+`include "./Execute/forwarding_unit.v"
 
 module tb_instruction_decode;
     // Inputs
@@ -74,11 +78,22 @@ module tb_instruction_decode;
     wire signed [63:0] ALU_data_out_mem_wb, read_Data_out_mem_wb;
     wire signed [63:0] write_back_data;
 
+    wire signed [63:0] alu_in1, alu_in2;
+ // Forwarding Unit wires
+    wire [1:0] fwd_A, fwd_B;
+
+    wire pc_write;
+    wire IF_ID_Write;
+    wire stall;
+    wire pcsrc;
+    wire [7:0] branch_target_input_ex_mem;
+
     // Instantiate Program Counter
     program_counter pc_inst (
         .clk(clk),
         .next_addr(next_pc),
-        .curr_addr(pc)
+        .curr_addr(pc),
+        .PC_Write(pc_write)
     );
 
     // Instantiate Instruction Memory
@@ -90,15 +105,22 @@ module tb_instruction_decode;
     // Instantiate PC Adder
     pc_increment pc_adder (
         .curr_addr(pc),
-        .branch_target(branch_target),
-        .branch(branch),
-        .zero_flag(zero_flag),
-        .address_out(next_pc)
+        .branch_target(branch_target_out_ex_mem),
+        .branch(branch_ex_mem),
+        .zero_flag(zero_out_ex_mem),
+        .address_out(next_pc),
+        .PCsrc(pcsrc)
     );
-    
-    // Instantiate IF/ID Register
+
+    adder adder_inst (
+        .address(pc_out_id_ex),
+        .immgen(imm_id_ex),
+        .branch_target(branch_target_input_ex_mem) // previously pc_out_id_ex
+    );
+
     IF_ID if_id_reg (
         .clk(clk),
+        .PCsrc(pcsrc),
         .instruction_in(instruction),
         .pc_in(pc),
         .ctrl(ctrl),
@@ -106,7 +128,8 @@ module tb_instruction_decode;
         .rs2(rs2),
         .rd(rd),
         .instruction_out(instruction_out),
-        .pc_out(pc_out)
+        .pc_out(pc_out),
+        .IF_ID_Write(IF_ID_Write)
     );
 
     // Instantiate Control Unit
@@ -118,7 +141,8 @@ module tb_instruction_decode;
         .MemRead(MemRead),
         .MemWrite(MemWrite),
         .alu_src(alu_src),
-        .alu_op(alu_op)
+        .alu_op(alu_op),
+        .stall(stall)
     );
 
     // Instantiate Register File
@@ -143,6 +167,7 @@ module tb_instruction_decode;
     // Instantiate ID/EX Register
     ID_EX id_ex_reg (
         .clk(clk),
+        .PCsrc(pcsrc),
         .rs1_data(rs1_data_out),
         .rs2_data(rs2_data_out),
         .rd_data(rd_data_out),
@@ -178,7 +203,7 @@ module tb_instruction_decode;
     );
 
     // ALU input mux
-    assign alu_input2 = alu_src_id_ex ? imm_id_ex : rs2_data_id_ex;
+    assign alu_in2 = alu_src_id_ex ? imm_id_ex : alu_input2;
 
     // Instantiate ALU Control
     alucontrol alu_ctrl (
@@ -189,8 +214,8 @@ module tb_instruction_decode;
 
     // Instantiate ALU
     ALU alu_unit (
-        .rs1(rs1_data_id_ex),
-        .rs2(alu_input2),
+        .rs1(alu_in1),
+        .rs2(alu_in2),
         .control(alu_control_op),
         .rd(alu_result),              
         .zero(alu_zero),              
@@ -198,12 +223,35 @@ module tb_instruction_decode;
         .overflow(alu_overflow)       
     );
 
+    forward_mux forward_mux_inst (
+        .ID_EX_rs1_value(rs1_data_id_ex),
+        .ID_EX_rs2_value(rs2_data_id_ex),
+        .EX_MEM_ALU_Out(ALU_data_out_ex_mem),
+        .writeback_mux_value(write_back_data),
+        .ForwardA(fwd_A),
+        .ForwardB(fwd_B),
+        .alu_in_A(alu_in1),
+        .alu_in_B(alu_input2)
+    );
+
+    forwarding_unit forward_unit (
+        .ID_EX_rs1(rs1_id_ex),
+        .ID_EX_rs2(rs2_id_ex),
+        .EX_MEM_rd(EX_MEM_rd),
+        .MEM_WB_rd(MEM_WB_rd),
+        .EX_MEM_regWrite(regwrite_ex_mem),
+        .MEM_WB_regWrite(regwrite_mem_wb),
+        .fwd_A(fwd_A),
+        .fwd_B(fwd_B)
+    );
+
     // Instantiate EX/MEM Register with corrected port names
     EX_MEM ex_mem_reg (
         .clk(clk),
+        .PCsrc(pcsrc),
         .ALU_data(alu_result),           
-        .rd_data(rs2_data_id_ex),        
-        .branch_target(pc_out_id_ex),    
+        .rd_data(alu_input2),        
+        .branch_target(branch_target_input_ex_mem),  //previously pc_out_id_ex  
         .zero(alu_zero),                 
         .Rd(rd_id_ex),                   
         .MemtoReg(MemtoReg_id_ex),       
@@ -256,6 +304,16 @@ module tb_instruction_decode;
         .MemtoReg(MemtoReg_mem_wb)
     );
 
+    hazard_detection_unit hazard_detection_unit_inst (
+        .IF_ID_rs1(rs1),
+        .IF_ID_rs2(rs2),
+        .ID_EX_rd(rd_id_ex),
+        .ID_EX_MemRead(MemRead_id_ex),
+        .stall(stall),
+        .IF_ID_Write(IF_ID_Write),
+        .PC_Write(pc_write)
+    );
+
     // Write back mux
     // assign write_back_data = MemtoReg_mem_wb ? read_Data_out_mem_wb : ALU_data_out_mem_wb;
 
@@ -269,14 +327,20 @@ module tb_instruction_decode;
     always @(negedge clk) begin
         $display("%0t\tPC=%d\tInstruction=0x%h\tNext PC=%d", 
                  $time, pc, instruction, next_pc);
+
+    // Monitor x11 through register file interface
+     if (MEM_WB_rd == 5'd11 && regwrite_mem_wb && write_back_data != 0) begin
+        $display("x11 updated to non-zero value (%d), exiting simulation", write_back_data);
+        $finish;
+    end
     end
     
     // Test stimulus
     initial begin
         // Initialize inputs
-        branch = 0;           // No branch for now
-        zero_flag = 0;        // No zero flag
-        branch_target = 8'd0; // Default branch target
+        // branch = 0;           // No branch for now
+        // zero_flag = 0;        // No zero flag
+        // branch_target = 8'd0; // Default branch target
         
         // Create a VCD file for waveform viewing
         $dumpfile("full_pipeline.vcd");
@@ -287,7 +351,7 @@ module tb_instruction_decode;
         $display("-----------------------------------------");
         
         // Run for multiple clock cycles to fetch several instructions
-        #300; // Run for 300ns (30 clock cycles) - more time needed for full pipeline
+        #2000; // Run for 300ns (30 clock cycles) - more time needed for full pipeline
         
         // Display final state information for all pipeline stages
         $display("\nIF/ID Register Final State:");
