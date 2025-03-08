@@ -88,4 +88,5 @@ module adder(
 
     // MUX for the brach_target and pc_plus_4
     assign address_out = PCsrc ? branch_target_8 : pc_plus_4;
+    
 endmodule

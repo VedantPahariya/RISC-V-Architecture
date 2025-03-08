@@ -1,0 +1,67 @@
+# Test Case 1: RAW Data Hazards and Tight Loop
+addi x1, x0, 5        # Initialize loop counter
+addi x2, x0, 0        # Initialize sum
+loop1:
+addi x2, x2, 1        # Increment sum (RAW hazard with next instruction)
+add x3, x2, x2        # RAW hazard with previous instruction
+sub x4, x3, x2        # RAW hazard with previous instruction
+addi x1, x1, -1       # Decrement counter
+bne x1, x0, loop1     # Branch if not done
+
+# Test Case 2: Load-Use Data Hazards
+addi x5, x0, 100      # Initialize memory address
+sw x2, 0(x5)          # Store sum to memory
+addi x5, x5, 4        # Increment address
+sw x3, 0(x5)          # Store another value
+addi x5, x5, -4       # Go back to first address
+lw x6, 0(x5)          # Load from memory
+add x7, x6, x0        # Use loaded value immediately (load-use hazard)
+lw x8, 4(x5)          # Load next value
+sub x9, x8, x6        # Use both loaded values
+
+# Test Case 3: Control Hazards with Multiple Branches
+addi x10, x0, 3       # Set branch condition
+addi x11, x0, 3       # Another value for comparison
+beq x10, x11, skip1   # First branch (taken)
+addi x12, x0, 10      # Should be skipped
+addi x13, x0, 11      # Should be skipped
+skip1:
+addi x12, x0, 20      # Execute this instead
+bne x10, x11, skip2   # Second branch (not taken)
+addi x14, x0, 30      # Should execute
+skip2:
+addi x15, x0, 40      # Should execute
+
+# Test Case 4: Back-to-back Branches (Edge Case)
+addi x16, x0, 1
+addi x17, x0, 2
+beq x16, x17, skip3   # Not taken
+beq x0, x0, skip4     # Always taken (right after another branch)
+addi x18, x0, 50      # Should be skipped
+skip3:
+addi x19, x0, 60      # Should execute
+skip4:
+addi x20, x0, 70      # Should execute
+
+# Test Case 5: Long Dependency Chain
+addi x21, x0, 1       # Initialize
+addi x22, x21, 1      # Depend on previous (x21)
+addi x23, x22, 1      # Depend on previous (x22)
+addi x24, x23, 1      # Depend on previous (x23)
+addi x25, x24, 1      # Depend on previous (x24)
+
+# Test Case 6: Load Hazards with Branching
+addi x26, x0, 200     # Memory address
+sw x21, 0(x26)        # Store a value
+lw x27, 0(x26)        # Load the value
+beq x27, x21, skip5   # Branch based on loaded value (load+branch hazard)
+addi x28, x0, 80      # Should be skipped
+skip5:
+addi x29, x0, 90      # Should execute
+
+# Test Case 7: Edge Case - Empty Loop
+addi x30, x0, 0       # Initialize to create a loop that immediately exits
+beq x30, x0, exit     # Branch if zero (exits immediately)
+addi x31, x0, 100     # Should be skipped
+exit:
+addi x1, x0, 255      # Final instruction

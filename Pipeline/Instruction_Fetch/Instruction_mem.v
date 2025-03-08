@@ -15,4 +15,5 @@ module insmem(
     // access the memory location indicated by the 8 bit address
     assign instruction = {memory[curr_addr+3],memory[curr_addr+2],memory[curr_addr+1],memory[curr_addr]};
 
+
 endmodule
