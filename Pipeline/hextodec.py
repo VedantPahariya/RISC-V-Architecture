@@ -24,7 +24,19 @@ def format_memory_file(filename):
         try:
             hex_value = line.strip()
             if all(c in '0123456789abcdefABCDEF' for c in hex_value):
-                decimal_value = int(hex_value, 16)
+                # Convert to unsigned integer first
+                unsigned_value = int(hex_value, 16)
+                
+                # For 64-bit values (16 hex digits), handle two's complement
+                if len(hex_value) == 16:
+                    # Check if sign bit (leftmost bit) is set
+                    if unsigned_value & (1 << 63):
+                        # Apply two's complement to get negative value
+                        decimal_value = unsigned_value - (1 << 64)
+                    else:
+                        decimal_value = unsigned_value
+                else:
+                    decimal_value = unsigned_value
                 
                 # Format with professional style - hex | dec:value
                 new_line = f"{hex_value} │ dec: {decimal_value:,}"
@@ -35,7 +47,6 @@ def format_memory_file(filename):
             # If conversion fails, keep the original line
             new_lines.append(line)
     
-    # Key change: Add UTF-8 encoding when writing the file
     with open(filename, 'w', encoding='utf-8') as file:
         for line in new_lines:
             file.write(line + '\n')
@@ -44,11 +55,13 @@ def main():
     # Process both register and memory log files
     try:
         format_memory_file('Registerlog.mem')
+        print("Register file updated with signed decimal values")
     except Exception as e:
         print(f"Error processing Registerlog.mem: {e}")
         
     try:
         format_memory_file('Memorylog.mem')
+        print("Memory file updated with signed decimal values")
     except Exception as e:
         print(f"Error processing Memorylog.mem: {e}")
 
