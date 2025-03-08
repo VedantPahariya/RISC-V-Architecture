@@ -46,7 +46,7 @@ always @(posedge clk) begin
         MemWrite_out  <= MemWrite;
         EX_MEM_rd     <= Rd;
     end
-    else begin
+    else if (PCsrc==1) begin
         ALU_data_out  <= 64'b0;
         rd_data_out   <= 64'b0;
         branch_target_out <= 8'b0;
@@ -57,6 +57,14 @@ always @(posedge clk) begin
         MemRead_out   <= 1'b0;
         MemWrite_out  <= 1'b0;
         EX_MEM_rd     <= 5'b0;
+    end
+    else begin
+        zero_out      <= 1'b0;
+        MemtoReg_out  <= 1'b0;
+        regwrite_out  <= 1'b0;
+        branch_out    <= 1'b0;
+        MemRead_out   <= 1'b0;
+        MemWrite_out  <= 1'b0;
     end
 end
 

@@ -40,6 +40,13 @@ module pc_increment(
     output [7:0] address_out,        // Output address
     output PCsrc                    // Branch control signal // AND of branch and zero
 );
+    // reg PCsrc_reg;
+
+    // initial begin
+    //     PCsrc_reg = 1'b0;
+    // end
+
+    // assign PCsrc = PCsrc_reg;
 
     wire [7:0] pc_plus_4;       // Holds address + 4
 
@@ -57,5 +64,6 @@ module pc_increment(
     always @(*) begin
         $display("branch_target: %b", branch_target);
     end
+
 
 endmodule

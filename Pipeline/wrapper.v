@@ -329,7 +329,7 @@ module tb_instruction_decode;
                  $time, pc, instruction, next_pc);
 
     // Monitor x11 through register file interface
-     if (MEM_WB_rd == 5'd11 && regwrite_mem_wb && write_back_data != 0) begin
+     if (MEM_WB_rd == 5'd31 && regwrite_mem_wb && write_back_data != 0) begin
         $display("x11 updated to non-zero value (%d), exiting simulation", write_back_data);
         $finish;
     end

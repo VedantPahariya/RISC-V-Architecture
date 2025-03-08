@@ -8,7 +8,7 @@ module program_counter(
     reg signed [7:0] PC;
 
     initial begin
-        PC = 8'b00000000; //trying PC equals -4
+        PC = 8'b11111100; 
         $display("PC updated to %d", PC);
     end
 

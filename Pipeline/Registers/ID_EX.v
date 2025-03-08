@@ -48,7 +48,7 @@ always @(posedge clk) begin
         rs2 <= IF_ID_rs2;
         rd  <= IF_ID_rd;
     end
-    else begin
+    else if (PCsrc == 1) begin
         rs1_data_out <= 64'b0;
         rs2_data_out <= 64'b0;
         rd_data_out  <= 64'b0;
@@ -65,6 +65,15 @@ always @(posedge clk) begin
         rs1 <= 5'b0;
         rs2 <= 5'b0;
         rd  <= 5'b0;
+    end
+    else begin
+        MemtoReg_out <= 1'b0;
+        regwrite_out <= 1'b0;
+        branch_out <= 1'b0;
+        MemRead_out  <= 1'b0;
+        MemWrite_out <= 1'b0;
+        alu_src_out  <= 1'b0;
+        alu_op_out   <= 2'b0;
     end
 end
 

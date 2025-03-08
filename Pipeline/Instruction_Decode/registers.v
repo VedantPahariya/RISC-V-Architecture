@@ -59,6 +59,9 @@ module register(
             //end
         end  
     end  
+    else begin
+        read_data_rd_reg = 63'bx;
+    end
     end
 
 endmodule
